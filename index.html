@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>项目管理系统</title>
+    <link rel="stylesheet" href="./lib/easyui/themes/icon.css">
+    <link rel="stylesheet" href="./lib/easyui/themes/color.css">
+    <link rel="stylesheet" href="./lib/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" href="./public/css/easyui-extend.css">
+    <link rel="stylesheet" href="./public/css/main.css">
+</head>
+
+<body>
+
+    <div class="easyui-layout" data-options="fit:true,border:false" id="ly_main">
+        <div class="" data-options="region:'north',height:52">
+            <div class="header">
+                <div class="logo">
+                    项目管理系统
+                </div>
+                <div class="left">
+
+                </div>
+                <div class="right">
+
+                </div>
+            </div>
+        </div>
+
+        <div class="" data-options="region:'center',border:false">
+            <div class="easyui-tabs" id="tabs_main" data-options="fit:true,border:false,tabHeight:30">
+                <div title="菜单信息" data-options="iconCls:'icon-ok'">
+                    <div class="sys-menu">
+                        <div class="submenu">
+                            <div>基础设置</div>
+                            <ul class="submenu">
+                                <li>
+                                    <a href="">我的测试1</a>
+                                </li>
+                                <li>
+                                    <a href="">我的测试1</a>
+                                </li>
+                                <li>
+                                    <a href="">我的测试1</a>
+                                </li>
+                                <li>
+                                    <a href="">我的测试1</a>
+                                </li>
+                                <li>
+                                    <a href="">我的测试1</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="submenu">
+                            <div>基础设置</div>
+                            <ul class="submenu">
+                                <li>
+                                    <a href="">我的测试1</a>
+                                </li>
+                                <li>
+                                    <a href="">我的测试1</a>
+                                </li>
+                                <li>
+                                    <a href="">我的测试1</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="submenu">
+                            <div>基础设置</div>
+                            <ul class="submenu">
+                                <li>
+                                    <a href="">我的测试1</a>
+                                </li>
+                                <li>
+                                    <a href="">我的测试1</a>
+                                </li>
+                                <li>
+                                    <a href="">我的测试1</a>
+                                </li>
+                                <li>
+                                    <a href="">我的测试1</a>
+                                </li>
+                                <li>
+                                    <a href="">我的测试1</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="submenu">
+                                <div>基础设置</div>
+                                <ul class="submenu">
+                                    <li>
+                                        <a href="">我的测试1</a>
+                                    </li>
+                                    <li>
+                                        <a href="">我的测试1</a>
+                                    </li>
+                                    <li>
+                                        <a href="">我的测试1</a>
+                                    </li>
+                                </ul>
+                            </div>
+    
+                            <div class="submenu">
+                                <div>基础设置</div>
+                                <ul class="submenu">
+                                    <li>
+                                        <a href="">我的测试1</a>
+                                    </li>
+                                    <li>
+                                        <a href="">我的测试1</a>
+                                    </li>
+                                    <li>
+                                        <a href="">我的测试1</a>
+                                    </li>
+                                    <li>
+                                        <a href="">我的测试1</a>
+                                    </li>
+                                    <li>
+                                        <a href="">我的测试1</a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            
+                            <div class="submenu">
+                                    <div>基础设置</div>
+                                    <ul class="submenu">
+                                        <li>
+                                            <a href="">我的测试1</a>
+                                        </li>
+                                        <li>
+                                            <a href="">我的测试1</a>
+                                        </li>
+                                        <li>
+                                            <a href="">我的测试1</a>
+                                        </li>
+                                    </ul>
+                                </div>
+        
+                                <div class="submenu">
+                                    <div>基础设置</div>
+                                    <ul class="submenu">
+                                        <li>
+                                            <a href="">我的测试1</a>
+                                        </li>
+                                        <li>
+                                            <a href="">我的测试1</a>
+                                        </li>
+                                        <li>
+                                            <a href="">我的测试1</a>
+                                        </li>
+                                        <li>
+                                            <a href="">我的测试1</a>
+                                        </li>
+                                        <li>
+                                            <a href="">我的测试1</a>
+                                        </li>
+                                    </ul>
+                                </div>
+        
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./lib/easyui/jquery.min.js"></script>
+    <script src="./lib/easyui/jquery.easyui.min.js"></script>
+
+    <script>    
+        $(function () {
+            var methods = {
+                init: function () {
+                    $.parser.parse('#ly_main')
+                }
+            }
+
+
+
+            methods.init();
+        })
+    </script>
+</body>
+
+</html>
