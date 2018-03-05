@@ -46,9 +46,13 @@ a {
 .sys-menu {
   padding: 0px 20px;
   margin: 10px auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-wrap: wrap;
 }
 .sys-menu .submenu {
-  float: left;
   min-width: 250px;
   border: 1px solid whitesmoke;
   margin-right: 5px;
@@ -82,4 +86,16 @@ a {
 }
 .sys-menu .submenu ul li:hover {
   background-color: cadetblue;
+}
+.condition {
+  padding: 5px 20px;
+  box-sizing: border-box;
+  height: 40px;
+}
+.condition label {
+  margin: 0 10;
+  vertical-align: middle;
+}
+.condition span {
+  margin-left: 5px;
 }

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>基本字典</title>
+    <link rel="stylesheet" href="../../lib/easyui/themes/icon.css">
+    <link rel="stylesheet" href="../../lib/easyui/themes/color.css">
+    <link rel="stylesheet" href="../../lib/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" href="../../public/css/easyui-extend.css">
+    <link rel="stylesheet" href="../../public/css/main.css">
+</head>
+
+<body>
+    <div class="easyui-layout" data-options="fit:true,border:false">
+        <div data-options="region:'west',width:300,title:'字典分类'">
+            <ul class="easyui-tree" id="tree_dict">
+            </ul>
+        </div>
+        <div data-options="region:'center'">
+            <table id="tb_dict">
+            </table>
+        </div>
+    </div>
+
+
+    <script src="../../lib/easyui/jquery.min.js"></script>
+    <script src="../../lib/easyui/jquery.easyui.min.js"></script>
+    <script src="../../public/js/main.js"></script>
+    <script type="text/javascript">
+        $(function () {
+
+            var methods = {
+                init: function () {
+
+                },
+                initTree: function () {
+                    $('#tree_dict').tree({
+                        data: [{ id: 1, text: '测试' }]
+                    });
+                },
+                initTable: function () {
+                    $.dgInit({
+                        id: "tb_dict",
+                        data: [{ dictType: '测试', dictNo: '111', name: '第一个字典' }],
+                        height: 100,
+                        columns: [[
+                            { field: 'id', hidden: true, width: 30 },
+                            { field: 'dictType', title: '字典类型', width: 50 },
+                            { field: 'dictNo', title: '字典编号', width: 50, sortable: true },
+                            { field: 'name', title: '字典名称', width: 50, sortable: true },
+                            { field: 'sort', title: '字典排序', width: 50, sortable: true },
+                            {
+                                field: 'isDel', title: '是否启用', width: 50,
+
+                            },
+                            { field: 'memo', title: '备注信息', width: 100 }
+                        ]],
+                        toolbar: [
+                            {
+                                text: "新增",
+                                iconCls: 'icon-add',
+                                hander: function () {
+                                    $.dgAdd();
+                                }
+                            },'-',{
+                                text: "编辑",
+                                iconCls: 'icon-edit',
+                                hander: function () {
+                                    $.dgAdd();
+                                }
+                            },'-',{
+                                text: "删除",
+                                iconCls: 'icon-remove',
+                                hander: function () {
+                                    $.dgAdd();
+                                }
+                            }
+                        ]
+                    });
+                }
+            }
+
+            methods.initTable();
+            methods.initTree()
+        })
+    </script>
+</body>
+
+</html>

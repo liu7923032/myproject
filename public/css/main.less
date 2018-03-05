@@ -72,8 +72,13 @@ a{
 .sys-menu{
     padding: 0px 20px;
     margin: 10px auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-wrap:wrap;
     .submenu{
-        float: left;
+        // float: left;
         min-width: 250px;
         border:1px solid whitesmoke;
         margin-right: 5px;
@@ -111,4 +116,19 @@ a{
         }
     }
    
+}
+
+
+.condition{
+    padding: 5px 20px;
+    box-sizing: border-box;
+    height: 40px;;
+    label{
+        margin:0 10;
+        vertical-align: middle;
+    }
+
+    span{
+        margin-left: 5px;
+    }
 }
