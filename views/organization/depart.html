@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>基本字典</title>
+    <title>组织信息</title>
     <link rel="stylesheet" href="../../lib/easyui/themes/icon.css">
     <link rel="stylesheet" href="../../lib/easyui/themes/color.css">
     <link rel="stylesheet" href="../../lib/easyui/themes/default/easyui.css">
@@ -15,12 +15,12 @@
 
 <body>
     <div class="easyui-layout" data-options="fit:true,border:false">
-        <div data-options="region:'west',width:300,title:'字典分类'">
-            <ul class="easyui-tree" id="tree_dict">
+        <div data-options="region:'west',width:300,title:'组织信息'">
+            <ul class="easyui-tree" id="tree_depart">
             </ul>
         </div>
         <div data-options="region:'center'">
-            <table id="tb_hospital">
+            <table id="tb_users">
             </table>
         </div>
     </div>
@@ -37,23 +37,34 @@
 
                 },
                 initTree: function () {
-                    $('#tree_dict').tree({
-                        data: [{ id: 1, text: '测试' }]
+                    $('#tree_depart').tree({
+                        data: [{ id: 1, text: 'XXX企业',children:[{
+                            id: 2, text: 'XXX1事业部'
+                        },{
+                            id: 3, text: 'XXX2事业部'
+                        },{
+                            id: 4, text: 'XXX2事业部'
+                        },] }]
                     });
                 },
                 initTable: function () {
                     $.dgInit({
-                        id: "tb_hospital",
-                        data: [{ dictType: '测试', dictNo: '111', name: '第一个字典' }],
-                        height: 100,
+                        id: "tb_users",
+                        title:'人员信息',
+                        data: [{ id: '1', depart: 'XXX事业部', gonghao: 'A001',
+                        name: '张三', email: '11@sina.com', sex: '男',name: '北京天安门', telphone: '18622221111',
+                         isDel: '否', memo: '测试数据' }],
                         columns: [[
                             { field: 'id', hidden: true, width: 30 },
-                            { field: 'dictType', title: '字典类型', width: 50 },
-                            { field: 'dictNo', title: '字典编号', width: 50, sortable: true },
-                            { field: 'name', title: '字典名称', width: 50, sortable: true },
-                            { field: 'sort', title: '字典排序', width: 50, sortable: true },
+                            { field: 'depart', title: '部门', width: 50, sortable: true },
+                            { field: 'gonghao', title: '账号', width: 50 },
+                            { field: 'name', title: '姓名', width: 50, sortable: true },
+                            { field: 'email', title: '邮箱', width: 50, sortable: true },
+                            { field: 'sex', title: '性别', width: 50, sortable: true },
+                            { field: 'address', title: '地址', width: 50 },
+                            { field: 'telphone', title: '联系方式', width: 50, sortable: true },
                             {
-                                field: 'isDel', title: '是否启用', width: 50,
+                                field: 'isDel', title: '启用', width: 50,
 
                             },
                             { field: 'memo', title: '备注信息', width: 100 }
