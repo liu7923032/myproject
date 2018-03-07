@@ -38,6 +38,7 @@
     </div>
 
 
+
     <script src="../../lib/easyui/jquery.min.js"></script>
     <script src="../../lib/easyui/jquery.easyui.min.js"></script>
     <script src="../../public/js/main.js"></script>
@@ -75,46 +76,22 @@
                         data: [{ dictType: '测试', dictNo: '111', name: '第一个字典' }],
                         height: 100,
                         columns: [[
-                            { field: 'id', hidden: true, width: 30 },
-                            { field: 'dictType', title: '项目分类', width: 50 },
-                            { field: 'dictType', title: '客户名称', width: 50 },
-                            { field: 'dictNo', title: '项目名称', width: 50, sortable: true },
-                            { field: 'dictNo', title: '项目编号', width: 50, sortable: true },
-                            { field: 'name', title: '项目金额', width: 50, sortable: true },
-                            { field: 'sort', title: '项目经理', width: 50, sortable: true },
+                        { field: 'id', hidden: true, width: 30 },
+                            { field: 'category', title: '项目分类', width: 50 },
+                            { field: 'hospName', title: '客户名称', width: 50 },
+                            { field: 'projectName', title: '项目名称', width: 50, sortable: true },
+                            { field: 'projectNo', title: '项目编号', width: 50, sortable: true },
+                            { field: 'projectMoney', title: '项目金额', width: 50, sortable: true },
+                            { field: 'projectManager', title: '项目经理', width: 50, sortable: true },
                             {
-                                field: 'isDel', title: '创建日期', width: 50,
-
+                                field: 'createDate', title: '创建日期', width: 50,
                             },
-                            { field: 'memo', title: '项目阶段', width: 100 },
+                            { field: 'stageName', title: '项目阶段', width: 100 },
 
-                             { field: 'name', title: '入场日期', width: 50, sortable: true },
-                            { field: 'sort', title: '验收日期', width: 50, sortable: true },
+                             { field: 'enterDate', title: '入场日期', width: 50, sortable: true },
+                            { field: 'docDate', title: '验收日期', width: 50, sortable: true },
                             { field: 'memo', title: '备注', width: 100 }
-                        ]],
-                        toolbar: [
-                            {
-                                text: "新增",
-                                iconCls: 'icon-add',
-                                hander: function () {
-                                    $.dgAdd({
-                                        id: 'tb_project'
-                                    });
-                                }
-                            }, '-', {
-                                text: "编辑",
-                                iconCls: 'icon-edit',
-                                hander: function () {
-                                    $.dgAdd();
-                                }
-                            }, '-', {
-                                text: "删除",
-                                iconCls: 'icon-remove',
-                                hander: function () {
-                                    $.dgAdd();
-                                }
-                            }
-                        ]
+                        ]]
                     });
                 }
             }
@@ -123,6 +100,8 @@
             methods.initTree()
         })
     </script>
+
+    
 </body>
 
 </html>

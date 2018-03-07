@@ -16,12 +16,88 @@
 <body>
     <div class="easyui-layout" data-options="fit:true,border:false">
         <div data-options="region:'west',width:300,title:'字典分类'">
-            <ul class="easyui-tree" id="tree_dict">
+            <ul class="easyui-tree" id="tree_main">
             </ul>
         </div>
         <div data-options="region:'center'">
-            <table id="tb_dict">
-            </table>
+                <table id="tb_ProBasicInfo" class="form-table">
+                        <tr>
+                            <td class="tdLabel">项目名称</td>
+                            <td>
+                                <input name="ProjectName" class="easyui-textbox" data-options="readonly: true,width:250" />
+                            </td>
+                            <td class="tdLabel">项目经理</td>
+                            <td>
+                                <input name="UserName" class="easyui-textbox" data-options="readonly: true,width:200" />
+                                <input id="txt_BasicInfo_GroupLeader" name="GroupLeader" hidden="hidden" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="tdLabel">客户</td>
+                            <td>
+                                <input name="HospName" class="easyui-textbox" data-options="readonly: true,width:250" />
+                            </td>
+                            <td class="tdLabel">项目金额</td>
+                            <td>
+                                <input name="ProjectMoney" class="easyui-numberbox" data-options="readonly: true,width:250,groupSeparator:',',min:0,precision:2,prefix:'￥',"
+                                />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="tdLabel">项目分类</td>
+                            <td>
+                                <input name="LineName" class="easyui-textbox" data-options="readonly: true,width:250" />
+                            </td>
+                            <td class="tdLabel">产品版本</td>
+                            <td>
+                                <input name="Version" class="easyui-textbox" data-options="readonly: true,width:250" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="tdLabel">项目期限(天)</td>
+                            <td>
+                                <input name="Cycle" class="easyui-textbox" data-options="readonly: true,width:250" />
+                            </td>
+                            <td class="tdLabel">项目阶段</td>
+                            <td>
+                                <input name="StageName" class="easyui-textbox" data-options="readonly: true,width:250" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="tdLabel">创建时间</td>
+                            <td>
+                                <input id="txt_BasicInfo_CreateDate" name="ProCreateDate" class="easyui-datebox" data-options="readonly: true,width:250"
+                                />
+                            </td>
+                            <td class="tdLabel">准备时间</td>
+                            <td>
+                                <input id="txt_BasicInfo_ReadyDate" name="ProReadyDate" class="easyui-datebox" data-options="readonly: true,width:250" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="tdLabel">入场时间</td>
+                            <td>
+                                <input id="txt_BasicInfo_EnterDate" name="EnterDate" class="easyui-datebox" data-options="readonly: true,width:250" />
+                            </td>
+                            <td class="tdLabel">验收时间</td>
+                            <td>
+                                <input id="txt_BasicInfo_DocDate" name="DocDate" class="easyui-datebox" data-options="readonly: true,width:250" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="tdLabel">备注</td>
+                            <td colspan="3">
+                                <input name="Memo" class="easyui-textbox" data-options=" readonly: true,multiline: true,height: 40" style="width:90%;" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:center;" colspan="4">
+                                <a class="easyui-linkbutton" data-options="iconCls:'icon-save',width:100">保存</a>
+                            </td>
+                        </tr>
+                    </table>
         </div>
     </div>
 
@@ -37,9 +113,24 @@
 
                 },
                 initTree: function () {
-                    $('#tree_dict').tree({
-                        data: [{ id: 1, text: '测试' }]
-                    });
+                     $('#tree_main').tree({
+                        data: [{
+                            id: 1, text: '进行中', children: [{ id: 1, text: '武汉协和医院XX项目' }
+                                , { id: 1, text: '武汉中医医院XX项目' }
+                                , { id: 1, text: '武汉中心医院XX项目' }]
+                        }, {
+                            id: 1, text: '暂停中', children: [{ id: 1, text: '武汉协和医院XX项目' }
+                                , { id: 1, text: '武汉中医医院XX项目' }
+                                , { id: 1, text: '武汉中心医院XX项目' }]
+                        }, {
+                            id: 1, text: '已完结', children: [{ id: 1, text: '武汉协和医院XX项目' }
+                                , { id: 1, text: '武汉中医医院XX项目' }
+                                , { id: 1, text: '武汉中心医院XX项目' }]
+                        },]
+                        , onClick: function (node) {
+                            loadProject(node.id);
+                        }
+                    })
                 },
                 initTable: function () {
                     $.dgInit({

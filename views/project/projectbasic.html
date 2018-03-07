@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <table id="tb_ProBasicInfo" class="form-table">
+        <tbody>
+            <tr>
+                <td class="tdLabel">项目名称</td>
+                <td>
+                    <input class="easyui-textbox textbox-f" data-options="readonly: true,width:$.fixWidth(0.25)" textboxname="ProjectName" style="display: none;">
+                    <span class="textbox textbox-readonly" style="width: 299px;">
+                        <input id="_easyui_textbox_input6" type="text" class="textbox-text validatebox-text validatebox-readonly" autocomplete="off"
+                            tabindex="" readonly="readonly" placeholder="" style="margin: 0px; padding-top: 0px; padding-bottom: 0px; height: 25px; line-height: 25px; width: 297px;">
+                        <input type="hidden" class="textbox-value" name="ProjectName" value="河北-河北省中医院麻醉V5.0">
+                    </span>
+                </td>
+                <td class="tdLabel">项目经理</td>
+                <td>
+                    <input class="easyui-textbox textbox-f" data-options="readonly: true,width:$.fixWidth(0.20)" textboxname="UserName" style="display: none;">
+                    <span class="textbox textbox-readonly" style="width: 239px;">
+                        <input id="_easyui_textbox_input7" type="text" class="textbox-text validatebox-text validatebox-readonly" autocomplete="off"
+                            tabindex="" readonly="readonly" placeholder="" style="margin: 0px; padding-top: 0px; padding-bottom: 0px; height: 25px; line-height: 25px; width: 237px;">
+                        <input type="hidden" class="textbox-value" name="UserName" value="沈又支">
+                    </span>
+                    <input id="txt_BasicInfo_GroupLeader" name="GroupLeader" hidden="hidden">
+                    <a id="a_BasicInfo_XMZZ" href="#" title="" class="tooltip-f">拆分组长</a>
+                </td>
+            </tr>
+            <tr>
+                <td class="tdLabel">医院</td>
+                <td>
+                    <input class="easyui-textbox textbox-f" data-options="readonly: true,width:$.fixWidth(0.25)" textboxname="HospName" style="display: none;">
+                    <span class="textbox textbox-readonly" style="width: 299px;">
+                        <input id="_easyui_textbox_input9" type="text" class="textbox-text validatebox-text validatebox-readonly" autocomplete="off"
+                            tabindex="" readonly="readonly" placeholder="" style="margin: 0px; padding-top: 0px; padding-bottom: 0px; height: 25px; line-height: 25px; width: 297px;">
+                        <input type="hidden" class="textbox-value" name="HospName" value="河北省中医院">
+                    </span>
+                </td>
+                <td class="tdLabel">项目金额</td>
+                <td>
+                    <input class="easyui-numberbox numberbox-f textbox-f" data-options="readonly: true,width:$.fixWidth(0.25),groupSeparator:',',min:0,precision:2,prefix:'￥',"
+                        textboxname="ProjectMoney" numberboxname="ProjectMoney" style="display: none;">
+                    <span class="textbox textbox-readonly numberbox" style="width: 299px;">
+                        <input id="_easyui_textbox_input20" type="text" class="textbox-text validatebox-text validatebox-readonly" autocomplete="off"
+                            tabindex="" readonly="readonly" placeholder="" style="margin: 0px; padding-top: 0px; padding-bottom: 0px; height: 25px; line-height: 25px; width: 297px;">
+                        <input type="hidden" class="textbox-value" name="ProjectMoney" value="891000.00">
+                    </span>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="tdLabel">分类</td>
+                <td>
+                    <input class="easyui-textbox textbox-f" data-options="readonly: true,width:$.fixWidth(0.25)" textboxname="LineName" style="display: none;">
+                    <span class="textbox textbox-readonly" style="width: 299px;">
+                        <input id="_easyui_textbox_input11" type="text" class="textbox-text validatebox-text validatebox-readonly" autocomplete="off"
+                            tabindex="" readonly="readonly" placeholder="" style="margin: 0px; padding-top: 0px; padding-bottom: 0px; height: 25px; line-height: 25px; width: 297px;">
+                        <input type="hidden" class="textbox-value" name="LineName" value="麻醉">
+                    </span>
+                </td>
+                <td class="tdLabel">产品版本</td>
+                <td>
+                    <input class="easyui-textbox textbox-f" data-options="readonly: true,width:$.fixWidth(0.25)" textboxname="Version" style="display: none;">
+                    <span class="textbox textbox-readonly" style="width: 299px;">
+                        <input id="_easyui_textbox_input12" type="text" class="textbox-text validatebox-text validatebox-readonly" autocomplete="off"
+                            tabindex="" readonly="readonly" placeholder="" style="margin: 0px; padding-top: 0px; padding-bottom: 0px; height: 25px; line-height: 25px; width: 297px;">
+                        <input type="hidden" class="textbox-value" name="Version" value="V5.0">
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="tdLabel">项目期限(天)</td>
+                <td>
+                    <input class="easyui-textbox textbox-f" data-options="readonly: true,width:$.fixWidth(0.25)" textboxname="Cycle" style="display: none;">
+                    <span class="textbox textbox-readonly" style="width: 299px;">
+                        <input id="_easyui_textbox_input13" type="text" class="textbox-text validatebox-text validatebox-readonly" autocomplete="off"
+                            tabindex="" readonly="readonly" placeholder="" style="margin: 0px; padding-top: 0px; padding-bottom: 0px; height: 25px; line-height: 25px; width: 297px;">
+                        <input type="hidden" class="textbox-value" name="Cycle" value="60">
+                    </span>
+                </td>
+                <td class="tdLabel">项目阶段</td>
+                <td>
+                    <input class="easyui-textbox textbox-f" data-options="readonly: true,width:$.fixWidth(0.25)" textboxname="StageName" style="display: none;">
+                    <span class="textbox textbox-readonly" style="width: 299px;">
+                        <input id="_easyui_textbox_input17" type="text" class="textbox-text validatebox-text validatebox-readonly" autocomplete="off"
+                            tabindex="" readonly="readonly" placeholder="" style="margin: 0px; padding-top: 0px; padding-bottom: 0px; height: 25px; line-height: 25px; width: 297px;">
+                        <input type="hidden" class="textbox-value" name="StageName" value="前期调研">
+                    </span>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="tdLabel">创建时间</td>
+                <td>
+                    <input id="txt_BasicInfo_CreateDate" class="easyui-datebox datebox-f combo-f textbox-f" data-options="readonly: true,width:$.fixWidth(0.25)"
+                        textboxname="ProCreateDate" comboname="ProCreateDate" style="display: none;">
+                    <span class="textbox textbox-readonly combo datebox" style="width: 299px;">
+                        <span class="textbox-addon textbox-addon-right" style="right: 0px; top: 0px;">
+                            <a href="javascript:;" class="textbox-icon combo-arrow textbox-icon-disabled" icon-index="0" tabindex="-1" style="width: 18px; height: 25px;"></a>
+                        </span>
+                        <input id="_easyui_textbox_input22" type="text" class="textbox-text validatebox-text validatebox-readonly" autocomplete="off"
+                            tabindex="" readonly="readonly" placeholder="" style="margin: 0px 18px 0px 0px; padding-top: 0px; padding-bottom: 0px; height: 25px; line-height: 25px; width: 279px;">
+                        <input type="hidden" class="textbox-value" name="ProCreateDate" value="2018-03-07">
+                    </span>
+                </td>
+                <td class="tdLabel">准备时间</td>
+                <td>
+                    <input id="txt_BasicInfo_ReadyDate" class="easyui-datebox datebox-f combo-f textbox-f" data-options="readonly: true,width:$.fixWidth(0.25)"
+                        textboxname="ProReadyDate" comboname="ProReadyDate" style="display: none;">
+                    <span class="textbox textbox-readonly combo datebox" style="width: 299px;">
+                        <span class="textbox-addon textbox-addon-right" style="right: 0px; top: 0px;">
+                            <a href="javascript:;" class="textbox-icon combo-arrow textbox-icon-disabled" icon-index="0" tabindex="-1" style="width: 18px; height: 25px;"></a>
+                        </span>
+                        <input id="_easyui_textbox_input23" type="text" class="textbox-text validatebox-text validatebox-readonly textbox-prompt"
+                            autocomplete="off" tabindex="" readonly="readonly" placeholder="" style="margin: 0px 18px 0px 0px; padding-top: 0px; padding-bottom: 0px; height: 25px; line-height: 25px; width: 279px;">
+                        <input type="hidden" class="textbox-value" name="ProReadyDate" value="">
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="tdLabel">入场时间</td>
+                <td>
+                    <input id="txt_BasicInfo_EnterDate" class="easyui-datebox datebox-f combo-f textbox-f" data-options="readonly: true,width:$.fixWidth(0.25)"
+                        textboxname="EnterDate" comboname="EnterDate" style="display: none;">
+                    <span class="textbox textbox-readonly combo datebox" style="width: 299px;">
+                        <span class="textbox-addon textbox-addon-right" style="right: 0px; top: 0px;">
+                            <a href="javascript:;" class="textbox-icon combo-arrow textbox-icon-disabled" icon-index="0" tabindex="-1" style="width: 18px; height: 25px;"></a>
+                        </span>
+                        <input id="_easyui_textbox_input24" type="text" class="textbox-text validatebox-text validatebox-readonly textbox-prompt"
+                            autocomplete="off" tabindex="" readonly="readonly" placeholder="" style="margin: 0px 18px 0px 0px; padding-top: 0px; padding-bottom: 0px; height: 25px; line-height: 25px; width: 279px;">
+                        <input type="hidden" class="textbox-value" name="EnterDate" value="">
+                    </span>
+                </td>
+                <td class="tdLabel">验收时间</td>
+                <td>
+                    <input id="txt_BasicInfo_DocDate" class="easyui-datebox datebox-f combo-f textbox-f" data-options="readonly: true,width:$.fixWidth(0.25)"
+                        textboxname="DocDate" comboname="DocDate" style="display: none;">
+                    <span class="textbox textbox-readonly combo datebox" style="width: 299px;">
+                        <span class="textbox-addon textbox-addon-right" style="right: 0px; top: 0px;">
+                            <a href="javascript:;" class="textbox-icon combo-arrow textbox-icon-disabled" icon-index="0" tabindex="-1" style="width: 18px; height: 25px;"></a>
+                        </span>
+                        <input id="_easyui_textbox_input25" type="text" class="textbox-text validatebox-text validatebox-readonly textbox-prompt"
+                            autocomplete="off" tabindex="" readonly="readonly" placeholder="" style="margin: 0px 18px 0px 0px; padding-top: 0px; padding-bottom: 0px; height: 25px; line-height: 25px; width: 279px;">
+                        <input type="hidden" class="textbox-value" name="DocDate" value="">
+                    </span>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="tdLabel">备注</td>
+                <td colspan="3">
+                    <input class="easyui-textbox textbox-f" data-options=" readonly: true,multiline: true,height: 40,width: $.fixWidth(0.65)"
+                        textboxname="Memo" style="display: none;">
+                    <span class="textbox textbox-readonly" style="width: 779px; height: 40px;">
+                        <textarea id="_easyui_textbox_input19" class="textbox-text validatebox-text validatebox-readonly textbox-prompt" autocomplete="off"
+                            tabindex="" readonly="readonly" placeholder="" style="margin: 0px; height: 38px; width: 777px;"></textarea>
+                        <input type="hidden" class="textbox-value" name="Memo" value="">
+                    </span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+
+</html>

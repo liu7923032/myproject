@@ -267,6 +267,6 @@ $.extend({
     },
     dialogAndTree:function(opitons){
 
-    }
-
+    },
+   
 })

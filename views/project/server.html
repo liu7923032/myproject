@@ -15,12 +15,8 @@
 
 <body>
     <div class="easyui-layout" data-options="fit:true,border:false">
-        <div data-options="region:'north',height:50,title:'查询条件'">
-            <ul class="easyui-tree" id="tree_dict">
-            </ul>
-        </div>
         <div data-options="region:'center'">
-            <table id="tb_dict">
+            <table id="tb_server">
             </table>
         </div>
     </div>
@@ -39,7 +35,7 @@
                 
                 initTable: function () {
                     $.dgInit({
-                        id: "tb_dict",
+                        id: "tb_server",
                         data: [{ dictType: '测试', dictNo: '111', name: '第一个字典' }],
                         height: 100,
                         columns: [[

@@ -6,29 +6,58 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>项目立项</title>
-    <link rel="stylesheet" href="../lib/easyui/themes/icon.css">
-    <link rel="stylesheet" href="../lib/easyui/themes/color.css">
-    <link rel="stylesheet" href="../lib/easyui/themes/default/easyui.css">
-    <link rel="stylesheet" href="../public/css/easyui-extend.css">
-    <link rel="stylesheet" href="../public/css/main.css">
+    <link rel="stylesheet" href="../../lib/easyui/themes/icon.css">
+    <link rel="stylesheet" href="../../lib/easyui/themes/color.css">
+    <link rel="stylesheet" href="../../lib/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" href="../../public/css/easyui-extend.css">
+    <link rel="stylesheet" href="../../public/css/main.css">
 </head>
 
 <body>
     <div class="easyui-layout" data-options="fit:true,border:false">
-        <div data-options="region:'north',height:50,title:'查询条件'">
-            <ul class="easyui-tree" id="tree_category">
-            </ul>
-        </div>
         <div data-options="region:'center'">
-            <table id="tb_dict">
+            <table id="tb_build">
             </table>
         </div>
     </div>
 
 
-    <script src="../lib/easyui/jquery.min.js"></script>
-    <script src="../lib/easyui/jquery.easyui.min.js"></script>
-    <script src="../public/js/main.js"></script>
+    <div id="dlg_build" class="easyui-dialog" data-options="closed:true,width:800,height:500">
+        <form method="POST" id="frm_build">
+            <table class="form-table">
+                <tr>
+                    <td class="tdLabel">项目分类</td>
+                    <td></td>
+                    <td class="tdLabel">项目阶段</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="tdLabel">客户信息</td>
+                    <td></td>
+                    <td class="tdLabel">项目名称</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="tdLabel">项目金额</td>
+                    <td></td>
+                    <td class="tdLabel">项目经理</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="tdLabel">项目编号</td>
+                    <td></td>
+                    <td class="tdLabel">入场日期</td>
+                    <td></td>
+                </tr>
+
+               
+            </table>
+        </form>
+    </div>
+
+    <script src="../../lib/easyui/jquery.min.js"></script>
+    <script src="../../lib/easyui/jquery.easyui.min.js"></script>
+    <script src="../../public/js/main.js"></script>
     <script type="text/javascript">
         $(function () {
 
@@ -36,45 +65,44 @@
                 init: function () {
 
                 },
-                initTree: function () {
-                    $('#tree_category').tree({
-                        data: [{ id: 1, text: '测试' }]
-                    });
-                },
                 initTable: function () {
                     $.dgInit({
-                        id: "tb_dict",
+                        id: "tb_build",
                         data: [{ dictType: '测试', dictNo: '111', name: '第一个字典' }],
-                        height: 100,
                         columns: [[
                             { field: 'id', hidden: true, width: 30 },
-                            { field: 'dictType', title: '字典类型', width: 50 },
-                            { field: 'dictNo', title: '字典编号', width: 50, sortable: true },
-                            { field: 'name', title: '字典名称', width: 50, sortable: true },
-                            { field: 'sort', title: '字典排序', width: 50, sortable: true },
+                            { field: 'category', title: '项目分类', width: 50 },
+                            { field: 'hospName', title: '客户名称', width: 50 },
+                            { field: 'projectName', title: '项目名称', width: 50, sortable: true },
+                            { field: 'projectNo', title: '项目编号', width: 50, sortable: true },
+                            { field: 'projectMoney', title: '项目金额', width: 50, sortable: true },
+                            { field: 'projectManager', title: '项目经理', width: 50, sortable: true },
                             {
-                                field: 'isDel', title: '是否启用', width: 50,
-
+                                field: 'createDate', title: '创建日期', width: 50,
                             },
-                            { field: 'memo', title: '备注信息', width: 100 }
+                            { field: 'stageName', title: '项目阶段', width: 100 },
+
+                            { field: 'enterDate', title: '入场日期', width: 50, sortable: true },
+                            { field: 'docDate', title: '验收日期', width: 50, sortable: true },
+                            { field: 'memo', title: '备注', width: 100 }
                         ]],
                         toolbar: [
                             {
-                                text: "新增",
+                                text: "新建项目",
                                 iconCls: 'icon-add',
-                                hander: function () {
-                                    $.dgAdd();
+                                handler: function () {
+                                    $('#dlg_build').dialog('open')
                                 }
-                            },'-',{
-                                text: "编辑",
+                            }, '-', {
+                                text: "编辑项目",
                                 iconCls: 'icon-edit',
-                                hander: function () {
+                                handler: function () {
                                     $.dgAdd();
                                 }
-                            },'-',{
+                            }, '-', {
                                 text: "删除",
                                 iconCls: 'icon-remove',
-                                hander: function () {
+                                handler: function () {
                                     $.dgAdd();
                                 }
                             }
@@ -84,7 +112,6 @@
             }
 
             methods.initTable();
-            methods.initTree();
         })
     </script>
 </body>

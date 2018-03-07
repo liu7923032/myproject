@@ -6,29 +6,132 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>基本字典</title>
-    <link rel="stylesheet" href="../lib/easyui/themes/icon.css">
-    <link rel="stylesheet" href="../lib/easyui/themes/color.css">
-    <link rel="stylesheet" href="../lib/easyui/themes/default/easyui.css">
-    <link rel="stylesheet" href="../public/css/easyui-extend.css">
-    <link rel="stylesheet" href="../public/css/main.css">
+    <link rel="stylesheet" href="../../lib/easyui/themes/icon.css">
+    <link rel="stylesheet" href="../../lib/easyui/themes/color.css">
+    <link rel="stylesheet" href="../../lib/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" href="../../public/css/easyui-extend.css">
+    <link rel="stylesheet" href="../../public/css/main.css">
 </head>
 
 <body>
     <div class="easyui-layout" data-options="fit:true,border:false">
-        <div data-options="region:'north',height:50,title:'查询条件'">
-            <ul class="easyui-tree" id="tree_dict">
+        <div data-options="region:'west',width:250,title:'项目信息'">
+            <ul class="easyui-tree" id="tree_project">
             </ul>
         </div>
-        <div data-options="region:'center'">
-            <table id="tb_dict">
-            </table>
+        <div data-options="region:'center',border:false">
+            <div class="easyui-tabs" data-options="fit:true,border:false">
+                <div title="基本信息">
+                    <table id="tb_ProBasicInfo" class="form-table">
+                        <tr>
+                            <td class="tdLabel">项目名称</td>
+                            <td>
+                                <input name="ProjectName" class="easyui-textbox" data-options="readonly: true,width:250" />
+                            </td>
+                            <td class="tdLabel">项目经理</td>
+                            <td>
+                                <input name="UserName" class="easyui-textbox" data-options="readonly: true,width:200" />
+                                <input id="txt_BasicInfo_GroupLeader" name="GroupLeader" hidden="hidden" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="tdLabel">客户</td>
+                            <td>
+                                <input name="HospName" class="easyui-textbox" data-options="readonly: true,width:250" />
+                            </td>
+                            <td class="tdLabel">项目金额</td>
+                            <td>
+                                <input name="ProjectMoney" class="easyui-numberbox" data-options="readonly: true,width:250,groupSeparator:',',min:0,precision:2,prefix:'￥',"
+                                />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="tdLabel">项目分类</td>
+                            <td>
+                                <input name="LineName" class="easyui-textbox" data-options="readonly: true,width:250" />
+                            </td>
+                            <td class="tdLabel">产品版本</td>
+                            <td>
+                                <input name="Version" class="easyui-textbox" data-options="readonly: true,width:250" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="tdLabel">项目期限(天)</td>
+                            <td>
+                                <input name="Cycle" class="easyui-textbox" data-options="readonly: true,width:250" />
+                            </td>
+                            <td class="tdLabel">项目阶段</td>
+                            <td>
+                                <input name="StageName" class="easyui-textbox" data-options="readonly: true,width:250" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="tdLabel">创建时间</td>
+                            <td>
+                                <input id="txt_BasicInfo_CreateDate" name="ProCreateDate" class="easyui-datebox" data-options="readonly: true,width:250"
+                                />
+                            </td>
+                            <td class="tdLabel">准备时间</td>
+                            <td>
+                                <input id="txt_BasicInfo_ReadyDate" name="ProReadyDate" class="easyui-datebox" data-options="readonly: true,width:250" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="tdLabel">入场时间</td>
+                            <td>
+                                <input id="txt_BasicInfo_EnterDate" name="EnterDate" class="easyui-datebox" data-options="readonly: true,width:250" />
+                            </td>
+                            <td class="tdLabel">验收时间</td>
+                            <td>
+                                <input id="txt_BasicInfo_DocDate" name="DocDate" class="easyui-datebox" data-options="readonly: true,width:250" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="tdLabel">备注</td>
+                            <td colspan="3">
+                                <input name="Memo" class="easyui-textbox" data-options=" readonly: true,multiline: true,height: 40" style="width:90%;" />
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div title="项目进度">
+
+                </div>
+                <div title="资源信息">
+                    <div class="easyui-tabs" data-options="fit:true,border:false,tabPosition:'bottom'">
+                        <div title="干系人">
+                            <table id="tb_relation"></table>
+                        </div>
+                        <div title="服务器">
+                            <table id="tb_server"></table>
+                        </div>
+                        <div title="客户机">
+                            <table id="tb_computer"></table>
+                        </div>
+                        <div title="其他设备">
+                            <table id="tb_other"></table>
+                        </div>
+                        <div title="集成信息">
+                            <table id="tb_integrate"></table>
+                        </div>
+                    </div>
+                </div>
+                <div title="项目文档">
+                    <table id="tb_doc"></table>
+                </div>
+                <div title="制约因素">
+<table id="tb_factor"></table>
+                </div>
+            </div>
         </div>
     </div>
 
 
-    <script src="../lib/easyui/jquery.min.js"></script>
-    <script src="../lib/easyui/jquery.easyui.min.js"></script>
-    <script src="../public/js/main.js"></script>
+    <script src="../../lib/easyui/jquery.min.js"></script>
+    <script src="../../lib/easyui/jquery.easyui.min.js"></script>
+    <script src="../../public/js/main.js"></script>
     <script type="text/javascript">
         $(function () {
 
@@ -36,50 +139,37 @@
                 init: function () {
 
                 },
-                
-                initTable: function () {
-                    $.dgInit({
-                        id: "tb_dict",
-                        data: [{ dictType: '测试', dictNo: '111', name: '第一个字典' }],
-                        height: 100,
-                        columns: [[
-                            { field: 'id', hidden: true, width: 30 },
-                            { field: 'dictType', title: '字典类型', width: 50 },
-                            { field: 'dictNo', title: '字典编号', width: 50, sortable: true },
-                            { field: 'name', title: '字典名称', width: 50, sortable: true },
-                            { field: 'sort', title: '字典排序', width: 50, sortable: true },
-                            {
-                                field: 'isDel', title: '是否启用', width: 50,
+                initTree: function () {
+                    $('#tree_project').tree({
+                        data: [{
+                            id: 1, text: '进行中', children: [{ id: 1, text: '武汉协和医院XX项目' }
+                                , { id: 1, text: '武汉中医医院XX项目' }
+                                , { id: 1, text: '武汉中心医院XX项目' }]
+                        }, {
+                            id: 1, text: '暂停中', children: [{ id: 1, text: '武汉协和医院XX项目' }
+                                , { id: 1, text: '武汉中医医院XX项目' }
+                                , { id: 1, text: '武汉中心医院XX项目' }]
+                        }, {
+                            id: 1, text: '已完结', children: [{ id: 1, text: '武汉协和医院XX项目' }
+                                , { id: 1, text: '武汉中医医院XX项目' }
+                                , { id: 1, text: '武汉中心医院XX项目' }]
+                        },]
+                        , onClick: function (node) {
+                            loadProject(node.id);
+                        }
+                    })
+                },
+                loadProject: function (projectId) {
 
-                            },
-                            { field: 'memo', title: '备注信息', width: 100 }
-                        ]],
-                        toolbar: [
-                            {
-                                text: "新增",
-                                iconCls: 'icon-add',
-                                hander: function () {
-                                    $.dgAdd();
-                                }
-                            },'-',{
-                                text: "编辑",
-                                iconCls: 'icon-edit',
-                                hander: function () {
-                                    $.dgAdd();
-                                }
-                            },'-',{
-                                text: "删除",
-                                iconCls: 'icon-remove',
-                                hander: function () {
-                                    $.dgAdd();
-                                }
-                            }
-                        ]
-                    });
+                },
+                initResource: function () {
+
                 }
+
             }
 
-            methods.initTable();
+            methods.initTree();
+
         })
     </script>
 </body>
