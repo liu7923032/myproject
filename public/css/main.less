@@ -164,4 +164,92 @@ a{
     }
 }
 
-  
+
+/*项目进度*/
+.process{
+    display: flex;
+    flex-flow: row wrap;
+    padding: 13px 5%;
+    background:#f5f7fa;
+    border-radius: 4%;
+    position: relative;
+    font-size: 16px;
+    .stage{
+        display: flex;
+        align-items: center;
+        flex-shrink: 1;
+        flex-basis: 23%;
+        margin-right: 0px;
+
+        cursor: pointer;
+        .head{
+            width: auto;
+            padding-right: 10px;
+            position: relative;
+            .success{
+                color: #67c23a;
+                border-color: #67c23a;
+            }
+        }
+
+        .main{
+            position: relative;
+            display: flex;
+            align-items: stretch;
+            flex-grow: 1;
+            text-align: left;
+            white-space: normal;
+
+            .success{
+                color: #67c23a;
+                border-color: #67c23a;
+            }
+
+            .title{
+                line-height: 20px;
+            }
+        }
+
+        .arrow{
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            &::before{
+                transform:rotate(-45deg) translateY(-4px);
+                transform-origin: 0 0;
+
+                content: " ";
+                display: inline-block;
+                position:absolute;
+                height: 15px;
+                width: 1px;
+                background-color: #c0c4cc;
+            }
+
+            &::after{
+                transform:rotate(45deg) translateY(4px);
+                transform-origin: 100% 100%;
+                content: " ";
+                display: inline-block;
+                position:absolute;
+                height: 15px;
+                width: 1px;
+                background-color: #c0c4cc;
+            }
+
+        }
+
+       
+    }
+
+    .isLast{
+        flex-basis: auto !important;
+        flex-grow: 0;
+        flex-shrink: 0;
+        max-width: 25%;
+        .arrow{
+            display: none;
+        }
+    }
+}
