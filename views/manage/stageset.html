@@ -15,12 +15,12 @@
 
 <body>
     <div class="easyui-layout" data-options="fit:true,border:false">
-        <div data-options="region:'west',width:300,title:'字典分类'">
-            <ul class="easyui-tree" id="tree_dict">
+        <div data-options="region:'west',width:250,title:'项目分类'">
+            <ul class="easyui-tree" id="tree_category">
             </ul>
         </div>
         <div data-options="region:'center'">
-            <table id="tb_dict">
+            <table id="tb_stage">
             </table>
         </div>
     </div>
@@ -32,30 +32,29 @@
     <script type="text/javascript">
         $(function () {
 
+var stageData=[{id:'xx1',text:'项目启动'},{id:'xx1',text:'项目规划'},{id:'xx1',text:'项目执行'},{id:'xx1',text:'项目验收'},{id:'xx1',text:'项目撤场'}]
             var methods = {
                 init: function () {
 
                 },
                 initTree: function () {
-                    $('#tree_dict').tree({
-                        data: [{ id: 1, text: '测试' }]
+                    $('#tree_category').tree({
+                        data: [{ id: 1, text: '项目类别', children: [
+                                { id: 2, text: 'XX产品' }, 
+                                { id: 3, text: 'YY产品' }] }]
                     });
                 },
                 initTable: function () {
                     $.dgInit({
-                        id: "tb_dict",
-                        data: [{ dictType: '测试', dictNo: '111', name: '第一个字典' }],
+                        id: "tb_stage",
+                        title:'阶段分类',
+                        data: stageData,
                         height: 100,
                         columns: [[
-                            { field: 'id', hidden: true, width: 30 },
-                            { field: 'dictType', title: '字典类型', width: 50 },
-                            { field: 'dictNo', title: '字典编号', width: 50, sortable: true },
-                            { field: 'name', title: '字典名称', width: 50, sortable: true },
-                            { field: 'sort', title: '字典排序', width: 50, sortable: true },
-                            {
-                                field: 'isDel', title: '是否启用', width: 50,
-
-                            },
+                            // { field: 'id', hidden: true, width: 30 },
+                            { field: 'id', title: '阶段编号', width: 50, sortable: true },
+                            { field: 'text', title: '阶段名称', width: 50, sortable: true },
+                            { field: 'sort', title: '排序', width: 50, sortable: true },
                             { field: 'memo', title: '备注信息', width: 100 }
                         ]],
                         toolbar: [
@@ -65,13 +64,13 @@
                                 hander: function () {
                                     $.dgAdd();
                                 }
-                            },'-',{
+                            }, '-', {
                                 text: "编辑",
                                 iconCls: 'icon-edit',
                                 hander: function () {
                                     $.dgAdd();
                                 }
-                            },'-',{
+                            }, '-', {
                                 text: "删除",
                                 iconCls: 'icon-remove',
                                 hander: function () {

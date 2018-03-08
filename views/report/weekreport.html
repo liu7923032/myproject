@@ -6,18 +6,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>基本字典</title>
-    <link rel="stylesheet" href="../lib/easyui/themes/icon.css">
-    <link rel="stylesheet" href="../lib/easyui/themes/color.css">
-    <link rel="stylesheet" href="../lib/easyui/themes/default/easyui.css">
-    <link rel="stylesheet" href="../public/css/easyui-extend.css">
-    <link rel="stylesheet" href="../public/css/main.css">
+    <link rel="stylesheet" href="../../lib/easyui/themes/icon.css">
+    <link rel="stylesheet" href="../../lib/easyui/themes/color.css">
+    <link rel="stylesheet" href="../../lib/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" href="../../public/css/easyui-extend.css">
+    <link rel="stylesheet" href="../../public/css/main.css">
 </head>
 
 <body>
     <div class="easyui-layout" data-options="fit:true,border:false">
-        <div data-options="region:'north',height:50,title:'查询条件'">
-            <ul class="easyui-tree" id="tree_dict">
-            </ul>
+        <div data-options="region:'north',height:70,title:'查询条件'" style="padding:5px;">
+            <span>项目分类</span>
+            <span><input type="text" class="easyui-combobox" data-options="width:200,valueField:'id',textField:'text',width:100"></span>
+            <span>关键字</span>
+            <span>
+                <input class="easyui-searchbox" data-options="width:200,prompt:'请输入项目名称/客户名称'" />
+            </span>
+            <span>
+                <a class="easyui-linkbutton" data-options="iconCls:'icon-search'">查询</a>
+            </span>
         </div>
         <div data-options="region:'center'">
             <table id="tb_dict">
@@ -26,9 +33,9 @@
     </div>
 
 
-    <script src="../lib/easyui/jquery.min.js"></script>
-    <script src="../lib/easyui/jquery.easyui.min.js"></script>
-    <script src="../public/js/main.js"></script>
+    <script src="../../lib/easyui/jquery.min.js"></script>
+    <script src="../../lib/easyui/jquery.easyui.min.js"></script>
+    <script src="../../public/js/main.js"></script>
     <script type="text/javascript">
         $(function () {
 
@@ -36,24 +43,84 @@
                 init: function () {
 
                 },
-                
+
                 initTable: function () {
                     $.dgInit({
                         id: "tb_dict",
                         data: [{ dictType: '测试', dictNo: '111', name: '第一个字典' }],
                         height: 100,
-                        columns: [[
-                            { field: 'id', hidden: true, width: 30 },
-                            { field: 'dictType', title: '字典类型', width: 50 },
-                            { field: 'dictNo', title: '字典编号', width: 50, sortable: true },
-                            { field: 'name', title: '字典名称', width: 50, sortable: true },
-                            { field: 'sort', title: '字典排序', width: 50, sortable: true },
-                            {
-                                field: 'isDel', title: '是否启用', width: 50,
+                        columns: [
+                            [   //第一列
 
-                            },
-                            { field: 'memo', title: '备注信息', width: 100 }
-                        ]],
+                                { field: '合同日期', title: '立项日期', width: 80, rowspan: 2 },
+                                { field: '合同类型', title: '项目类型', width: 60, rowspan: 2 },
+                                { field: '医院', title: '医院名称', width: 200 },
+                                { field: '项目名称', title: '项目名称', width: 250 },
+                                { field: '项目性质', title: '项目性质', width: 70, rowspan: 2 },
+                                { field: '项目类别', title: '项目类别', width: 70, rowspan: 2 },
+                                {
+                                    field: '项目金额', title: '项目金额', align: 'right', width: 100, rowspan: 2
+                                },
+                                { field: '项目期限', title: '项目期限', align: 'right', width: 60, rowspan: 2 },
+                                { field: '项目经理', title: '项目经理', width: 60, rowspan: 2 },
+                                { title: '项目里程碑', width: 100, colspan: 5 },
+                                {
+                                    field: 'IncomeMoney', title: '确认收入', align: 'right', width: 120, rowspan: 2,
+                                    formatter: function (value, row, index) {
+                                        if (value) {
+                                            if (parseInt(value) != 0) {
+                                                return $.GetMoneyFormat(value.toString());
+                                            }
+                                        } else {
+                                            return 0;
+                                        }
+                                    }
+                                },
+                                { field: '项目备注', title: '项目备注', width: 400, rowspan: 2 }
+
+                            ], //第二列
+                            [
+                                {
+                                    field: '实施方案', title: '实施方案', width: 80,
+                                    styler: function (value, row, index) {
+                                        if (WeekMethods.checkDate(value)) {
+                                            return 'color:Blue;';
+                                        }
+                                    }
+                                },
+                                {
+                                    field: '入场日期', title: '入场日期', width: 80,
+                                    styler: function (value, row, index) {
+                                        if (WeekMethods.checkDate(value)) {
+                                            return 'color:Blue;';
+                                        }
+                                    }
+                                },
+                                {
+                                    field: '需求确认', title: '需求确认', width: 80,
+                                    styler: function (value, row, index) {
+                                        if (WeekMethods.checkDate(value)) {
+                                            return 'color:Blue;';
+                                        }
+                                    }
+                                },
+                                {
+                                    field: '上线确认', title: '上线确认', width: 80,
+                                    styler: function (value, row, index) {
+                                        if (WeekMethods.checkDate(value)) {
+                                            return 'color:Blue;'
+                                        }
+                                    }
+                                },
+                                {
+                                    field: '总体验收', title: '总体验收', width: 80,
+                                    styler: function (value, row, index) {
+                                        if (WeekMethods.checkDate(value)) {
+                                            return 'color:Blue;';
+                                        }
+                                    }
+                                }
+                            ]],
                         toolbar: [
                             {
                                 text: "新增",
@@ -61,13 +128,13 @@
                                 hander: function () {
                                     $.dgAdd();
                                 }
-                            },'-',{
+                            }, '-', {
                                 text: "编辑",
                                 iconCls: 'icon-edit',
                                 hander: function () {
                                     $.dgAdd();
                                 }
-                            },'-',{
+                            }, '-', {
                                 text: "删除",
                                 iconCls: 'icon-remove',
                                 hander: function () {

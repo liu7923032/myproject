@@ -15,9 +15,24 @@
 
 <body>
     <div class="easyui-layout" data-options="fit:true,border:false">
+        <div data-options="region:'north',height:50" style="padding:10px;">
+            <span>关键字</span>
+            <span>
+                <input class="easyui-searchbox" data-options="width:200,prompt:'请输入项目名称'" />
+
+            </span>
+            <span>
+                <a class="easyui-linkbutton" data-options="iconCls:'icon-search'">查询</a>
+            </span>
+        </div>
         <div data-options="region:'center'">
-            <table id="tb_approve">
-            </table>
+            <div class="easyui-tabs" data-options="fit:true,border:false,tabPosition:'bottom'">
+                <div title="待审文档">
+                    <table id="tb_approve">
+                    </table>
+                </div>
+                <div title="已审文档"></div>
+            </div>
         </div>
     </div>
 
@@ -28,9 +43,11 @@
     <script type="text/javascript">
         $(function () {
 
-            var docData=[{ projectName: '武汉中心xx项目', docType: '入场报告', 
-            uploadDate: '2018-01-08',docDate: '2018-01-08', memo: '111'}];
-                          
+            var docData = [{
+                projectName: '武汉中心xx项目', docType: '入场报告',
+                uploadDate: '2018-01-08', docDate: '2018-01-08', memo: '111'
+            }];
+
             var methods = {
                 init: function () {
 
@@ -40,7 +57,7 @@
                         id: "tb_approve",
                         data: [{ dictType: '测试', dictNo: '111', name: '第一个字典' }],
                         height: 100,
-                        data:docData,
+                        data: docData,
                         columns: [[
                             { field: 'id', hidden: true, width: 30 },
                             { field: 'projectName', title: '项目名称', width: 50 },
