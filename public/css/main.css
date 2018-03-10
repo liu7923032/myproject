@@ -65,6 +65,23 @@ a {
   background-color: #9dbdf0;
   color: blue;
 }
+.submenu .selected {
+  color: red;
+  background-color: orange;
+}
+.query-table {
+  border-collapse: collapse;
+  border: 1px whitesmoke solid;
+  width: auto;
+}
+.query-table td {
+  vertical-align: middle;
+  border: 0;
+  font-size: 14px;
+  padding: 2px 5px;
+  height: 30px;
+  box-sizing: border-box;
+}
 .condition {
   padding: 5px 20px;
   box-sizing: border-box;

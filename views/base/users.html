@@ -26,53 +26,58 @@
             </table>
         </div>
         <div data-options="region:'center'">
-            <table id="tb_menu">
+            <table id="tb_users">
             </table>
         </div>
     </div>
 
 
     <!-- 字典信息增删该查 -->
-    <div id="dlg_menu" class="easyui-dialog" data-options="width:500,height:450,closed:true,title:'菜单信息'">
+    <div id="dlg_users" class="easyui-dialog" data-options="width:500,height:450,closed:true,title:'人员信息'">
         <form id="frm_users" method="POST">
             <input type="hidden" name="id">
-            <input type="hidden" name="parentId" />
             <table class="form-table">
                 <tr>
-                    <td class="tdLabel">菜单名称</td>
+                    <td class="tdLabel">账号</td>
                     <td>
                         <input class="easyui-textbox" name="account" data-options="width:300,required:true" />
                     </td>
                 </tr>
                 <tr>
-                    <td class="tdLabel">菜单编号</td>
+                    <td class="tdLabel">密码</td>
                     <td>
                         <input class="easyui-textbox" name="password" data-options="width:300,required:true,prompt:'默认000'" />
                     </td>
                 </tr>
                 <tr>
-                    <td class="tdLabel">请求地址</td>
+                    <td class="tdLabel">姓名</td>
                     <td>
                         <input class="easyui-textbox" name="name" data-options="width:300,required:true,prompt:'XX'" />
                     </td>
                 </tr>
                 <tr>
-                    <td class="tdLabel">父菜单</td>
+                    <td class="tdLabel">身份证</td>
                     <td>
-                        <input class="easyui-textbox" name="parane" data-options="width:300,required:true,prompt:'4xx109'" />
+                        <input class="easyui-textbox" name="identity" data-options="width:300,required:true,prompt:'4xx109'" />
                     </td>
                 </tr>
                 <tr>
-                    <td class="tdLabel">需求</td>
+                    <td class="tdLabel">性别</td>
                     <td>
                         <input class="easyui-combobox" name="sex" data-options="width:300,valueField:'id',textField:'text',data:[{id:0,text:'女'},{id:1,text:'男'}]"
                         />
                     </td>
                 </tr>
                 <tr>
+                    <td class="tdLabel">联系方式</td>
+                    <td>
+                        <input class="easyui-textbox" name="telphone" data-options="width:300,required:true,prompt:'手机号'" />
+                    </td>
+                </tr>
+                <tr>
                     <td class="tdLabel">状态</td>
                     <td>
-                        <input class="easyui-combobox" name="isDel" data-options="width:300,editable:false,valueField:'id',textField:'text',data:[{id:0,text:'正常'},{id:1,text:'作废'}]"
+                        <input class="easyui-combobox" name="isDel" data-options="width:300,valueField:'id',textField:'text',data:[{id:0,text:'正常'},{id:1,text:'作废'}]"
                         />
                     </td>
                 </tr>
@@ -99,29 +104,85 @@
             var methods = {
                 init: function () {
 
-
-                    $('#dlg_menu').dialog({
+                    $('#dlg_usersType').dialog({
+                        width: 500, height: 300, closed: true, title: '字典类别',
                         buttons: [
                             {
                                 text: '保存',
                                 iconCls: 'icon-save',
                                 handler: function () {
-                                    methods.save();
+                                    methods.saveDictType();
                                 }
                             }, {
                                 text: '关闭',
                                 iconCls: 'icon-cancel',
                                 handler: function () {
-                                    $('#dlg_menu').dialog('close');
+                                    $('#dlg_usersType').dialog('close');
+                                }
+                            }
+                        ]
+                    });
+
+                    $('#dlg_users').dialog({
+                        buttons: [
+                            {
+                                text: '保存',
+                                iconCls: 'icon-save',
+                                handler: function () {
+                                    methods.saveDict();
+                                }
+                            }, {
+                                text: '关闭',
+                                iconCls: 'icon-cancel',
+                                handler: function () {
+                                    $('#dlg_users').dialog('close');
                                 }
                             }
                         ]
                     });
                 },
-
+                initTree: function () {
+                    $('#tree_dict').tree({
+                        data: [{
+                            id: 1, text: '字典信息', children: [{
+                                id: 2, text: '公共字典'
+                            }]
+                        }],
+                        onClick: function (node) {
+                            selectNode = node;
+                            //通过类型来获取字典数据
+                            $('#tb_users').datagrid('reload', dictUrl + "?dictType=" + encodeURI(node.text));
+                        },
+                        onContextMenu: function (e, node) {
+                            e.preventDefault();
+                            // select the node
+                            $('#tree_dict').tree('select', node.target);
+                            // display context menu
+                            $('#mm_dict').menu('show', {
+                                left: e.pageX,
+                                top: e.pageY,
+                                onClick: function (item) {
+                                    if (item.text == "编辑") {
+                                        $('#frm_usersType').form('load', node.attributes);
+                                        $('#dlg_usersType').dialog('open')
+                                    } else {
+                                        $.messager.confirm('确定?', "确定要删除<span style='color:red;'>" + node.text + "</span>", function (r) {
+                                            if (!r) {
+                                                return;
+                                            }
+                                            $.post(delTypeUrl, { id: node.id }, function (data) {
+                                                $.procAjax(data)
+                                            })
+                                        })
+                                    }
+                                }
+                            });
+                        }
+                    });
+                },
                 initTable: function () {
                     $.dgInit({
-                        id: "tb_menu",
+                        id: "tb_users",
                         data: [{ dictType: '测试', dictNo: '111', name: '第一个字典' }],
                         // url:''
                         columns: [[
@@ -142,25 +203,25 @@
                                 iconCls: 'icon-add',
                                 handler: function () {
                                     $('#frm_users').form('clear');
-                                    $('#dlg_menu').dialog('open')
+                                    $('#dlg_users').dialog('open')
                                 }
                             }, '-', {
                                 text: "编辑",
                                 iconCls: 'icon-edit',
                                 handler: function () {
 
-                                    $.rowSelectCheck('tb_menu', "请先要编辑的人员", function (row) {
+                                    $.rowSelectCheck('tb_users', "请先要编辑的人员", function (row) {
                                         $('#frm_users').form('load', row);
-                                        $('#dlg_menu').dialog('open')
+                                        $('#dlg_users').dialog('open')
                                     })
                                 }
                             }, '-', {
                                 text: "删除",
                                 iconCls: 'icon-remove',
                                 handler: function () {
-                                    $.rowSelectCheck('tb_menu', "请先要删除的字典", function (row) {
+                                    $.rowSelectCheck('tb_users', "请先要删除的字典", function (row) {
                                         $('#frm_users').form('load', row);
-                                        $('#dlg_menu').dialog('open')
+                                        $('#dlg_users').dialog('open')
                                     })
                                 }
                             }
@@ -168,11 +229,12 @@
                     });
                 },
 
+
                 save: function () {
                     $.formSave({
                         id: 'frm_users',
                         success: function (data) {
-                            $('#dlg_menu').dialog('close')
+                            $('#dlg_users').dialog('close')
                             $.procAjax(data);
                         }
                     });
@@ -181,6 +243,7 @@
 
             methods.init();
             methods.initTable();
+            methods.initTree()
         })
     </script>
 </body>

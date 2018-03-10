@@ -265,8 +265,54 @@ $.extend({
         //开启dialog
         $('#' + dlgId).dialog('open');
     },
-    dialogAndTree:function(opitons){
+    dialogAndTree: function (opitons) {
 
     },
-   
+    //行选择检查
+    rowSelectCheck: function (id, message, func) {
+        var row = $('#' + id).datagrid('getSelected');
+        console.log(row)
+        if (!row) {
+            $.errorMsg(message);
+            return;
+        }
+        if (func && typeof (func) == "function") {
+            func(row);
+        }
+    },
+    errorMsg: function (message, func) {
+        $.messager.alert({
+            title: '错误提示',
+            icon: 'error',
+            msg: "<span style='color:red;font-size:14px;'>[" + message + "]</span>",
+            fn: function () {
+                func();
+            }
+        })
+    },
+
+    //处理服务器端的数据
+    procAjax: function (data, success, fail) {
+
+    },
+    //表单提交
+    formSave: function (options) {
+        $.messager.progress();
+        $('#' + options.id).form({
+            onSubmit: function () {
+                var isValid = $(this).form('validate');
+                if (!isValid) {
+                    $.messager.progress('close');	// hide progress bar while the form is invalid
+                }
+                return isValid;	// return false will stop the form submission
+            },
+            onSuccess: function (data) {
+                $.messager.progress('close');
+                if (typeof (opitons.success) == "function") {
+                    options.success(data);
+                }
+            }
+        })
+    }
+
 })

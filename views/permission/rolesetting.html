@@ -15,112 +15,150 @@
 
 <body>
     <div class="easyui-layout" data-options="fit:true,border:false">
-        <div data-options="region:'west',width:200,title:'角色'">
+        <div data-options="region:'west',width:200,title:'角色',tools:[{iconCls:'icon-add',handler:function(){$('#dlg_dictType').dialog('open')}}]">
             <ul class="easyui-tree" id="tree_role">
             </ul>
         </div>
-        <div data-options="region:'center'">
-            <div class="easyui-tabs" data-options="fit:true,border:false,tabPosition:'bottom'">
-                <div title="角色VS用户">
-                    <table id="tb_userrole">
-                    </table>
-                </div>
-                <div title="所有用户">
-                    <table id="tb_users">
-                    </table>
-                </div>
-            </div>
+        <div data-options="region:'center',title:'所有人员'">
+            <table id="tb_all">
+            </table>
+        </div>
 
+        <div data-options="region:'east',width:300,title:'角色对应的人员'">
+            <table id="tb_uRole"></table>
         </div>
     </div>
+
 
     <script src="../../lib/easyui/jquery.min.js"></script>
     <script src="../../lib/easyui/jquery.easyui.min.js"></script>
     <script src="../../public/js/main.js"></script>
     <script type="text/javascript">
         $(function () {
+            var dictUrl = ""
+                , delTypeUrl = ""
+                , selectNode;
 
-            var users = [{
-                id: '1', depart: 'XXX事业部', gonghao: 'A001',
-                name: '张三', email: '11@sina.com', sex: '男', name: '北京天安门', telphone: '18622221111',
-                isDel: '否', memo: '测试数据'
-            }, {
-                id: '1', depart: 'XXX事业部', gonghao: 'A001',
-                name: '李四', email: '11@sina.com', sex: '男', name: '北京天安门', telphone: '18622221111',
-                isDel: '否', memo: '测试数据'
-            }, {
-                id: '1', depart: 'XXX事业部', gonghao: 'A001',
-                name: '王五', email: '11@sina.com', sex: '男', name: '北京天安门', telphone: '18622221111',
-                isDel: '否', memo: '测试数据'
-            }]
             var methods = {
                 init: function () {
 
                 },
                 initTree: function () {
                     $('#tree_role').tree({
-                        data: [{ id: 1, text: '管理员' }, { id: 1, text: '项目总监' },
-                        { id: 1, text: '项目经理' }]
+                        data: [{
+                            id: 1, text: '所有角色', children: [{
+                                id: 2, text: '公共字典'
+                            }]
+                        }],
+                        onClick: function (node) {
+                            selectNode = node;
+                            //通过类型来获取字典数据
+                            $('#tb_uRole').datagrid('reload', dictUrl + "?roleId=" + encodeURI(node.id));
+                        },
                     });
                 },
-                initUsers: function () {
+                initAllTable: function () {
                     $.dgInit({
-                        id: "tb_users",
-                        data: users,
+                        id: "tb_all",
+                        data: [{ dictType: '测试', dictNo: '111', name: '第一个字典' }],
+                        // url:''
+                        selectOnCheck: false,
+                        checkOnSelect: false,
+                        singleSelect: false,
                         columns: [[
-                            { field: 'ck', width: 50, checkbox: true },
-
                             { field: 'id', hidden: true, width: 30 },
-                            { field: 'gonghao', title: '账号', width: 50 },
+                            { field: 'ck', checkbox: true },
                             { field: 'name', title: '姓名', width: 50 },
-                            { field: 'depart', title: '部门', width: 50 },
+                            { field: 'account', title: '账号', width: 50, sortable: true },
+                            { field: 'sex', title: '性别', width: 50, sortable: true },
                         ]],
                         toolbar: [
                             {
-                                text: "设定",
+                                text: "保存人员到角色",
                                 iconCls: 'icon-save',
-                                hander: function () {
-                                    $.dgAdd();
+                                handler: function () {
+                                    $.rowSelectCheck('tb_all', "请先要删除的字典", function (row) {
+                                        $('#frm_dict').form('load', row);
+                                        $('#dlg_dict').dialog('open')
+                                    })
                                 }
                             }
                         ]
                     });
                 },
-                initUAndRole: function () {
+                initURoleTable: function () {
                     $.dgInit({
-                        id: "tb_userrole",
-                        data: users,
-                        checkbox: true,
+                        id: "tb_uRole",
+                        data: [{ dictType: '测试', dictNo: '111', name: '第一个字典' }],
+                        // url:''
                         columns: [[
-                            { field: 'ck', width: 50, checkbox: true },
-
                             { field: 'id', hidden: true, width: 30 },
-                            { field: 'gonghao', title: '账号', width: 50 },
+                            { field: 'ck', checkbox: true },
                             { field: 'name', title: '姓名', width: 50 },
-                            { field: 'depart', title: '部门', width: 50 },
+                            { field: 'account', title: '账号', width: 50, sortable: true },
+                            { field: 'sex', title: '性别', width: 50, sortable: true },
                         ]],
                         toolbar: [
                             {
-                                text: "删除",
-                                iconCls: 'icon-add',
-                                hander: function () {
-                                    $.dgAdd();
-                                }
-                            }, '-', {
-                                text: "刷新",
-                                iconCls: 'icon-reload',
-                                hander: function () {
-                                    $.dgAdd();
+                                text: "删除人员",
+                                iconCls: 'icon-remove',
+                                handler: function () {
+                                    $.rowSelectCheck('tb_uRole', "请先要删除的字典", function (row) {
+
+                                    })
                                 }
                             }
                         ]
                     });
+                },
+
+                saveUseToRole: function () {
+                    if (!selectNode) {
+                        $.errorMsg("请选择角色");
+                        return;
+
+                    }
+                    var checkRows = $('#tb_all').datagrid('getChecked');
+                    if (checkRows.length == 0) {
+                        $.errorMsg("请选择要授权的人员");
+                        return;
+                    }
+
+                    var strJson = JSON.stringify(checkRows);
+                
+                    $.post(delUrl, { "users": strJson, "roleId": selectNode.id }, function (data) {
+                        $.procAjax(data, function (data) {
+                            $('#tb_uRole').datagrid('reload');
+                        })
+                    })
+
+                },
+                delUser: function () {
+                    if (!selectNode) {
+                        $.errorMsg("请选择角色");
+                        return;
+
+                    }
+                    var checkRows = $('#tb_uRole').datagrid('getChecked');
+                    if (checkRows.length == 0) {
+                        $.errorMsg("请选择要删除的人员");
+                        return;
+                    }
+
+                    var strJson = JSON.stringify(checkRows);
+
+                    $.post(delUrl, { "users": strJson, "roleId": selectNode.id }, function (data) {
+                        $.procAjax(data, function (data) {
+                            $('#tb_uRole').datagrid('reload');
+                        })
+                    })
                 }
             }
 
-            methods.initUsers();
-            methods.initUAndRole();
+            methods.init();
             methods.initTree()
+            methods.initTable();
+            methods.initURoleTable();
         })
     </script>
 </body>

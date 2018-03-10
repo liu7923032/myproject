@@ -15,20 +15,25 @@
 
 <body>
     <div class="easyui-layout" data-options="fit:true,border:false">
-        <div data-options="region:'west',width:300,title:'字典分类'">
+        <div data-options="region:'west',width:300,title:'角色'">
             <ul class="easyui-tree" id="tree_role">
             </ul>
         </div>
-        <div data-options="region:'center',title:'所有权限'">
+        <div data-options="region:'center',title:'所有权限',tools:[{iconCls:'icon-save',handler:function(){}}]">
             <ul class="easyui-tree" id="tree_permission">
             </ul>
         </div>
         <div data-options="region:'east',width:450,title:'已有权限'">
-            <ul class="easyui-tree" id="tree_rolevsper">
+            <ul class="easyui-tree" id="tree_rPermission">
             </ul>
         </div>
     </div>
 
+
+    <!-- 字典类别的右键菜单 -->
+    <div id="mm_rPer" class="easyui-menu" style="width:120px;">
+        <div data-options="iconCls:'icon-remove'">删除</div>
+    </div>
 
     <script src="../../lib/easyui/jquery.min.js"></script>
     <script src="../../lib/easyui/jquery.easyui.min.js"></script>
@@ -80,234 +85,54 @@
                 "isParent": false,
                 "nocheck": false,
                 "chkDisabled": false
-            }, {
-                "id": "QYZD0002",
-                "text": "HResource",
-                "open": true,
-                "checked": false,
-                "iconOpen": null,
-                "iconClose": null,
-                "isExist": false,
-                "children": [{
-                    "id": "RSGL",
-                    "text": "人事管理",
-                    "open": false,
-                    "checked": false,
-                    "iconOpen": null,
-                    "iconClose": null,
-                    "isExist": false,
-                    "children": [{
-                        "id": "RSGL0001",
-                        "text": "员工管理<span style='color:blue'>[菜单]</span>",
-                        "open": false,
-                        "checked": false,
-                        "iconOpen": null,
-                        "iconClose": null,
-                        "isExist": false,
-                        "children": null,
-                        "font": null,
-                        "icon": null,
-                        "param": null,
-                        "isParent": false,
-                        "nocheck": false,
-                        "chkDisabled": false
-                    }, {
-                        "id": "RSGL0002",
-                        "text": "岗位变更信息<span style='color:blue'>[菜单]</span>",
-                        "open": false,
-                        "checked": false,
-                        "iconOpen": null,
-                        "iconClose": null,
-                        "isExist": false,
-                        "children": null,
-                        "font": null,
-                        "icon": null,
-                        "param": null,
-                        "isParent": false,
-                        "nocheck": false,
-                        "chkDisabled": false
-                    }, {
-                        "id": "RSGL0003",
-                        "text": "档案管理<span style='color:blue'>[菜单]</span>",
-                        "open": false,
-                        "checked": false,
-                        "iconOpen": null,
-                        "iconClose": null,
-                        "isExist": false,
-                        "children": null,
-                        "font": null,
-                        "icon": null,
-                        "param": null,
-                        "isParent": false,
-                        "nocheck": false,
-                        "chkDisabled": false
-                    }, {
-                        "id": "RSGL0004",
-                        "text": "人员奖惩<span style='color:blue'>[菜单]</span>",
-                        "open": false,
-                        "checked": false,
-                        "iconOpen": null,
-                        "iconClose": null,
-                        "isExist": false,
-                        "children": null,
-                        "font": null,
-                        "icon": null,
-                        "param": null,
-                        "isParent": false,
-                        "nocheck": false,
-                        "chkDisabled": false
-                    }],
-                    "font": null,
-                    "icon": null,
-                    "param": null,
-                    "isParent": false,
-                    "nocheck": false,
-                    "chkDisabled": false
-                }, {
-                    "id": "ZPGL",
-                    "text": "招聘管理",
-                    "open": false,
-                    "checked": false,
-                    "iconOpen": null,
-                    "iconClose": null,
-                    "isExist": false,
-                    "children": [{
-                        "id": "ZPGL0001",
-                        "text": "招聘进度<span style='color:blue'>[菜单]</span>",
-                        "open": false,
-                        "checked": false,
-                        "iconOpen": null,
-                        "iconClose": null,
-                        "isExist": false,
-                        "children": null,
-                        "font": null,
-                        "icon": null,
-                        "param": null,
-                        "isParent": false,
-                        "nocheck": false,
-                        "chkDisabled": false
-                    }, {
-                        "id": "ZPGL0002",
-                        "text": "待报道清单<span style='color:blue'>[菜单]</span>",
-                        "open": false,
-                        "checked": false,
-                        "iconOpen": null,
-                        "iconClose": null,
-                        "isExist": false,
-                        "children": null,
-                        "font": null,
-                        "icon": null,
-                        "param": null,
-                        "isParent": false,
-                        "nocheck": false,
-                        "chkDisabled": false
-                    }],
-                    "font": null,
-                    "icon": null,
-                    "param": null,
-                    "isParent": false,
-                    "nocheck": false,
-                    "chkDisabled": false
-                }],
-                "font": null,
-                "icon": null,
-                "param": null,
-                "isParent": false,
-                "nocheck": false,
-                "chkDisabled": false
-            }, {
-                "id": "QYZD0006",
-                "text": "WorkFlow",
-                "open": true,
-                "checked": false,
-                "iconOpen": null,
-                "iconClose": null,
-                "isExist": false,
-                "children": [{
-                    "id": "LCGL",
-                    "text": "通用流程管理",
-                    "open": false,
-                    "checked": false,
-                    "iconOpen": null,
-                    "iconClose": null,
-                    "isExist": false,
-                    "children": [{
-                        "id": "LCGL0002",
-                        "text": "发起流程<span style='color:blue'>[菜单]</span>",
-                        "open": false,
-                        "checked": false,
-                        "iconOpen": null,
-                        "iconClose": null,
-                        "isExist": false,
-                        "children": null,
-                        "font": null,
-                        "icon": null,
-                        "param": null,
-                        "isParent": false,
-                        "nocheck": false,
-                        "chkDisabled": false
-                    }, {
-                        "id": "LCGL0003",
-                        "text": "流程查询<span style='color:blue'>[菜单]</span>",
-                        "open": false,
-                        "checked": false,
-                        "iconOpen": null,
-                        "iconClose": null,
-                        "isExist": false,
-                        "children": null,
-                        "font": null,
-                        "icon": null,
-                        "param": null,
-                        "isParent": false,
-                        "nocheck": false,
-                        "chkDisabled": false
-                    }, {
-                        "id": "LCGL0004",
-                        "text": "待审流程<span style='color:blue'>[菜单]</span>",
-                        "open": false,
-                        "checked": false,
-                        "iconOpen": null,
-                        "iconClose": null,
-                        "isExist": false,
-                        "children": null,
-                        "font": null,
-                        "icon": null,
-                        "param": null,
-                        "isParent": false,
-                        "nocheck": false,
-                        "chkDisabled": false
-                    }],
-                    "font": null,
-                    "icon": null,
-                    "param": null,
-                    "isParent": false,
-                    "nocheck": false,
-                    "chkDisabled": false
-                }],
-                "font": null,
-                "icon": null,
-                "param": null,
-                "isParent": false,
-                "nocheck": false,
-                "chkDisabled": false
-            }];
+            }]
+                , selectNode;
             var methods = {
                 init: function () {
 
                 },
                 initTree: function () {
                     $('#tree_role').tree({
-                        data: [{ id: 1, text: '管理员' }, { id: 1, text: '项目总监' },
-                        { id: 1, text: '项目经理' }]
+                        data: [{
+                            id: 1, text: '所有角色', children: [
+                                { id: 1, text: '管理员' }, { id: 1, text: '项目总监' },
+                                { id: 1, text: '项目经理' }
+                            ]
+                        }],
+                        onClick: function (node) {
+                            selectNode = node;
+                            $('#tree_rPermission').tree('reload',"/?roleId="+encodeURI(node.id))
+                        }
                     });
 
                     $('#tree_permission').tree({
                         data: pData,
-                        checkbox:true
+                        checkbox: true
                     });
 
-                    $('#tree_rolevsper').tree({
-                        data: pData
+
+                    $('#tree_rPermission').tree({
+                        onContextMenu: function (e, node) {
+                            e.preventDefault();
+                            // select the node
+                            $('#tree_rPermission').tree('select', node.target);
+                            // display context menu
+                            $('#mm_rPer').menu('show', {
+                                left: e.pageX,
+                                top: e.pageY,
+                                onClick: function (item) {
+                                    $.messager.confirm('确定?', "确定要删除<span style='color:red;'>" + node.text + "</span>", function (r) {
+                                        if (!r) {
+                                            return;
+                                        }
+
+                                        $.post("", { "perId": node.id ,"roleNo":selectNode.id}, function (data) {
+                                            $.procAjax(data)
+                                        })
+                                    })
+                                }
+                            });
+                        }
                     });
 
                 },
