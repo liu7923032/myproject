@@ -56,7 +56,14 @@ $.extend({
             fitColumns: true,
             pageSize: 15,
             pageNumber: 1,
-            pageList: [15, 30, 45]
+            pageList: [15, 30, 45],
+            onBeforeLoad:function(param){
+                console.log(param)
+            },
+            queryParams:{},
+            loader:function(param,success,error){
+                console.log(param)
+            }
         }
         $.extend(dataGirdOptions, options);
         console.log(dataGirdOptions)

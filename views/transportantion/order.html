@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>订单管理</title>
+    <link rel="stylesheet" href="../../lib/easyui/themes/icon.css">
+    <link rel="stylesheet" href="../../lib/easyui/themes/color.css">
+    <link rel="stylesheet" href="../../lib/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" href="../../public/css/easyui-extend.css">
+    <link rel="stylesheet" href="../../public/css/main.css">
+</head>
+
+<body>
+    <div class="easyui-layout" data-options="fit:true,border:false">
+        <div data-options="region:'north',height:70,title:'订单查询'" style="padding:5px;">
+            <table class="query-table">
+                <tr>
+                    <td>关键字:</td>
+                    <td>
+                        <input class="easyui-searchbox" id="txtKey" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div data-options="region:'center'">
+            <table id="tb_order">
+            </table>
+        </div>
+    </div>
+
+
+    <!-- 订单信息增删该查 -->
+    <div id="dlg_order" class="easyui-dialog" data-options="width:500,height:450,closed:true,title:'人员信息'">
+        <form id="frm_order" method="POST">
+            <input type="hidden" name="id">
+            <table class="form-table">
+                <tr>
+                    <td class="tdLabel">报修类别</td>
+                    <td>
+                        <input class="easyui-textbox" name="category" data-options="width:300,required:true" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdLabel">报修名称</td>
+                    <td>
+                        <input class="easyui-textbox" name="" data-options="width:300,required:true,prompt:'默认000'" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdLabel">所在楼层</td>
+                    <td>
+                        <input class="easyui-textbox" name="name" data-options="width:300,required:true,prompt:'XX'" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdLabel">详细地址</td>
+                    <td>
+                        <input class="easyui-textbox" name="identity" data-options="width:300,required:true,prompt:'4xx109'" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdLabel">联系人</td>
+                    <td>
+                        <input class="easyui-textbox" name="telphone" data-options="width:300,required:true,prompt:'手机号'" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdLabel">指派人员</td>
+                    <td>
+                        <input class="easyui-combobox" name="sex" data-options="width:300,valueField:'id',textField:'text',data:[{id:0,text:'女'},{id:1,text:'男'}]"
+                        />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdLabel">状态</td>
+                    <td>
+                        <input class="easyui-combobox" name="isDel" data-options="width:300,valueField:'id',textField:'text',data:[{id:0,text:'正常'},{id:1,text:'作废'}]"
+                        />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdLabel">图片</td>
+                    <td>
+                        <input class="easyui-textbox" name="memo" data-options="width:300,multiline:true,height:100" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdLabel">备注</td>
+                    <td>
+                        <input class="easyui-textbox" name="memo" data-options="width:300,multiline:true,height:100" />
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+
+
+    <script src="../../lib/easyui/jquery.min.js"></script>
+    <script src="../../lib/easyui/jquery.easyui.min.js"></script>
+    <script src="../../public/js/main.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            var dictUrl = ""
+                , delTypeUrl = ""
+                , selectNode;
+
+            var methods = {
+                init: function () {
+
+                    $('#dlg_order').dialog({
+                        width: 500, height: 400, closed: true, title: '派单信息',
+                        buttons: [
+                            {
+                                text: '保存',
+                                iconCls: 'icon-save',
+                                handler: function () {
+                                    methods.save();
+                                }
+                            }, {
+                                text: '关闭',
+                                iconCls: 'icon-cancel',
+                                handler: function () {
+                                    $('#dlg_order').dialog('close');
+                                }
+                            }
+                        ]
+                    });
+
+                },
+                initTable: function () {
+                    $.dgInit({
+                        id: "tb_order",
+                        data: [{ dictType: '测试', dictNo: '111', name: '第一个字典' }],
+                        // url:''
+                        fitColumns:false,
+                        columns: [[
+                            { field: 'id', hidden: true, width: 30 },
+                            { field: 'orderNo', title: '派工单号', width: 100, align: 'center' },
+                            {
+                                field: 'orderStatus', title: '工单状态', width: 80, align: 'center', sortable: true
+                            },
+                            { field: 'orderType', title: '报修类别', width: 100, align: 'left' },
+                            { field: 'goodName', title: '报修物品', width: 100, align: 'left' },
+                            { field: 'applyUser', title: '报修人', width: 80, align: 'left', },
+                            { field: 'floor', title: '楼层', width: 120, align: 'left', },
+                            { field: 'address', title: '地址', width: 120, align: 'left', },
+                            { field: 'memo', title: '报修人', width: 80, align: 'left', },
+                            { field: 'applyTel', title: '联系方式', width: 120 },
+                            { field: 'handleUser', title: '处理人', width: 70},
+                            { field: 'createTime', title: '创建时间', width: 100 },
+                            { field: 'createUserName', title: '创建人', width: 70 },
+                        ]],
+                        toolbar: [
+                            {
+                                text: "新增工单",
+                                iconCls: 'icon-add',
+                                handler: function () {
+                                    $('#frm_order').form('clear');
+                                    $('#dlg_order').dialog('open')
+                                }
+                            }, '-', {
+                                text: "修改工单",
+                                iconCls: 'icon-edit',
+                                handler: function () {
+
+                                    $.rowSelectCheck('tb_order', "请先要编辑的工单", function (row) {
+                                        $('#frm_order').form('load', row);
+                                        $('#dlg_order').dialog('open')
+                                    })
+                                }
+                            }, '-', {
+                                text: "删除工单",
+                                iconCls: 'icon-remove',
+                                handler: function () {
+                                    $.rowSelectCheck('tb_order', "请先要删除的工单", function (row) {
+                                        $('#frm_order').form('load', row);
+                                        $('#dlg_order').dialog('open')
+                                    })
+                                }
+                            }
+                        ]
+                    });
+                },
+
+
+                save: function () {
+                    $.formSave({
+                        id: 'frm_order',
+                        success: function (data) {
+                            $('#dlg_order').dialog('close')
+                            $.procAjax(data);
+                        }
+                    });
+                }
+            }
+
+            methods.init();
+            methods.initTable();
+            methods.initTree()
+        })
+    </script>
+</body>
+
+</html>

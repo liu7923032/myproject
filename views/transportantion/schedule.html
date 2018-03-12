@@ -1,12 +1,350 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <link href="/js/EasyUI/themes/icon.css" rel="stylesheet" />
+    <link href="/CSS/MyCSS/MyTable.css" rel="stylesheet" />
+    <link href="/js/EasyUI/themes/default/easyui.css" rel="stylesheet" />
 </head>
 <body>
-    
+
+    <div class="easyui-layout" data-options="fit:true,border:false">
+        <div data-options="region:'north',height:48">
+            <table style="border-spacing:0px;margin:10px;">
+                <tr>
+                    <td id="txtTime">排班年:</td>
+                    <td>
+                        <input type="text" id='txtYear' />
+                    </td>
+                    <td id="txtTime">排班月:</td>
+                    <td>
+                        <input type="text" id='txtMonth' />
+                    </td>
+                    <td><div class="datagrid-btn-separator"></div></td>
+                    <td>关键字:</td>
+                    <td>
+                        <input class="easyui-searchbox" id="txtKey" style="width: 300px; margin-left: 40px;" />
+                    </td>
+                    <td><div class="datagrid-btn-separator"></div></td>
+                    <td><a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="schedulueFunc.queryData()">查询</a></td>
+                </tr>
+            </table>
+        </div>
+        <div data-options="region:'center'">
+            <table id="tb_scheduling"></table>
+        </div>
+    </div>
+    <!--右键菜单-->
+    <div id="mm_schedule" class="easyui-menu" style="width:120px;">
+        <div data-options="iconCls:'icon-play'" onclick="schedulueFunc.start()">开始天</div>
+        <div data-options="iconCls:'icon-stop'" onclick="schedulueFunc.end()">结束天</div>
+        <div data-options="iconCls:'icon-redo'" onclick="schedulueFunc.cancel()">取消</div>
+    </div>
+
+    <script src="/js/EasyUI/jquery.js"></script>
+    <script src="/js/EasyUI/jquery.easyui.js"></script>
+    <script src="/js/MyJS/Jquery.MyJS.js"></script>
+    <script src="/js/MyJS/Date.js"></script>
+    <script src="/js/EasyUI/locale/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript">
+
+        var scheduleBox = {
+            sDay: 0,
+            eDay: 0,
+            curDay: 0,
+            curRowIndex: -1,
+            changes: [],
+            holidays: "",
+            weekDays: ""
+        }
+        $(function () {
+
+            schedulueFunc = {
+                initLayout: function () {
+                    $('#txtYear').combobox({
+                        valueField: 'id',
+                        textField: 'text',
+                        editable: false,
+                        width: 100,
+                        data: $.getYearArray()
+                    });
+
+                    $('#txtMonth').combobox({
+                        valueField: 'id',
+                        textField: 'text',
+                        editable: false,
+                        width: 100,
+                        data: $.getMonthArray(),
+                        onClick: function (record) {
+
+                            schedulueFunc.queryData(record.id);
+                        }
+                    });
+
+
+                    $('#txtKey').searchbox({
+                        searcher: function () {
+                            schedulueFunc.queryData();
+                        }
+                    })
+
+                    var date = new Date();
+
+                    $('#txtYear').combobox('setValue', date.getFullYear());
+                    $('#txtMonth').combobox('setValue', date.getMonth() + 1);
+                },
+                initTable: function (jsonData, holidays) {
+                    var newCols = schedulueFunc.generateCols(holidays);
+                    $.dgInit({
+                        // url: "",
+                        id: "tb_scheduling",
+                        // params: queryParam,
+                        idField: 'UserId',
+                        columns: newCols,
+                        data: jsonData,
+                        onClickCell: function (index, field, value) {
+                            var tempObj = {};
+                            if (value == 1) {
+                                tempObj[field] = 0;
+                            } else {
+                                tempObj[field] = 1;
+                            }
+                            $('#tb_scheduling').datagrid('updateRow', {
+                                index: index,
+                                row: tempObj
+                            });
+                        },
+                        onRowContextMenu: function (e, index, row) {
+                            e.preventDefault();
+                            var cellIndex = 0;
+                            if (e.target.nodeName == "TD") {
+                                cellIndex = e.target.cellIndex - 3;
+                            } else {
+                                cellIndex = $(e.target).parents('td').attr('field');
+                            }
+
+                            scheduleBox.curDay = cellIndex;
+                            scheduleBox.curRowIndex = index;
+                            $('#mm_schedule').menu('show', {
+                                left: e.pageX,
+                                top: e.pageY
+                            });
+                        },
+                        //toolbar: [{
+                        //    text: '<span style="color:blue;">【左键单选】</span>'
+                        //},'-', {
+                        //    text: '<span style="color:red;">【右键范围选择】</span>'
+                        //}, '-', {
+                        //    text: '<span style="color:red;">【红色为双休,绿色为国假】</span>'
+                        //}]
+                    })
+                },
+                //根据权限加载按钮
+                InitTalbeToolBar: function () {
+
+                    $.getJSON('/MenuBtn/GetBtnByMenuNo/HJZX0006', "", function (data) {
+                        if (data && data.length > 0) {
+                            data.push({
+                                text: '<span style="color:blue;">【左键单选】</span>'
+                            }, {
+                                text: '<span style="color:red;">【右键范围选择】</span>'
+                            }, {
+                                text: '<span style="color:red;">【红色为双休,绿色为国假】</span>'
+                            });
+                            $('#tb_scheduling').datagrid({ toolbar: data });
+                        } else {
+
+                            $('#tb_scheduling').datagrid({
+                                toolbar: [{
+                                    text: '<span style="color:blue;">【左键单选】</span>'
+                                }, '-', {
+                                    text: '<span style="color:red;">【右键范围选择】</span>'
+                                }, '-', {
+                                    text: '<span style="color:red;">【红色为双休,绿色为国假】</span>'
+                                }]
+                            });
+                        }
+
+
+                    });
+                },
+                getParam: function (month) {
+                    return {
+                        "yFlag": $('#txtYear').combobox('getValue'),
+                        "mFlag": month || $('#txtMonth').combobox('getValue'),
+                        "key": $('#txtKey').searchbox('getValue')
+                    }
+                },
+                //生成cols
+                generateCols: function () {
+
+                    var holidayArray = [], weekArray = [];
+                    if (scheduleBox.holidays && scheduleBox.holidays.length > 0) {
+                        holidayArray = scheduleBox.holidays.split(',');
+                    }
+
+                    if (scheduleBox.weekDays && scheduleBox.weekDays.length > 0) {
+                        weekArray = scheduleBox.weekDays.split(',');
+                    }
+                    var param = schedulueFunc.getParam();
+
+                    var dayData = $.dayNumOfMonth(param.yFlag, param.mFlag);
+                    var title = param.mFlag + "月排班";
+                    var oneRow = [
+                        { field: 'SerialNo', hidden: true, width: 20, align: 'left', rowspan: 2 },
+                        { field: 'UserId', hidden: true, width: 20, align: 'left', rowspan: 2 },
+                        { field: 'UserName', width: 70, title: "60", align: 'center', rowspan: 2 },
+                        { field: 'Phone', width: 80, title: "座机", align: 'center', rowspan: 2 },
+                        { field: 'Months', width: 300, align: 'center', title: '<span style="color:blue;font-size:18px;font-weight:1000;margin:5px;">' + title + '</span>', colspan: dayData }
+                    ];
+                    var twoRow = [];
+                    for (var i = 1; i <= dayData; i++) {
+                        //检查该日期是否是周六周日
+                        var tempDate = new Date(param.yFlag + "/" + param.mFlag + "/" + i);
+                        var fontColor = "black";
+
+                        var title = "" + i;
+                        console.log("title:" + title);
+                        console.log(holidayArray)
+                        console.log($.inArray(title, holidayArray));
+                        if (holidayArray.length > 0 && $.inArray(title, holidayArray) > -1) {
+                            fontColor = "green";
+                        }
+
+                        if (weekArray.length > 0 && $.inArray(title, weekArray) > -1) {
+                            fontColor = "red";
+                        }
+                        twoRow.push({
+                            field: title,
+                            title: "<span style='font-size:16px;font-weight:900;color:" + fontColor + "'>" + title + "</span>",
+                            width: 30,
+                            align: 'center',
+                            halign: 'center',
+                            formatter: function (value, row, index) {
+                                if (!value) {
+                                    return ""
+                                } else {
+                                    return "<img src='/js/easyui/themes/icons/ok.png' />";
+                                }
+                            }
+                        });
+                    }
+                    return [oneRow, twoRow];
+                },
+                start: function () {
+                    scheduleBox.sDay = scheduleBox.curDay;
+                    var obj = {
+                    };
+                    obj[scheduleBox.sDay] = 1;
+                    $('#tb_scheduling').datagrid('updateRow', {
+                        index: scheduleBox.curRowIndex,
+                        row: obj
+                    });
+
+                    scheduleBox.curDay = 0;
+                    scheduleBox.curRowIndex = -1;
+                },
+                end: function () {
+                    //检查是否有选择开始日期
+                    if (scheduleBox.sDay == 0) {
+                        $.messager.alert("错误提示", "请先设置开始天");
+                        return;
+                    }
+                    scheduleBox.eDay = scheduleBox.curDay;
+                    var obj = {
+                    };
+                    if (scheduleBox.eDay > scheduleBox.sDay) {
+                        //设置从开始到结束所有列的值
+                        for (var i = scheduleBox.sDay + 1; i <= scheduleBox.eDay; i++) {
+                            obj[i] = 1;
+                            $('#tb_scheduling').datagrid('updateRow', {
+                                index: scheduleBox.curRowIndex,
+                                row: obj
+                            });
+                        }
+                    }
+                    scheduleBox.curDay = 0;
+                    scheduleBox.curRowIndex = -1;
+                },
+                cancel: function () {
+                    var obj = {
+                    };
+                    obj[scheduleBox.curDay] = 0;
+                    $('#tb_scheduling').datagrid('updateRow', {
+                        index: scheduleBox.curRowIndex,
+                        row: obj
+                    });
+                },
+                //保存修改后的数据
+                save: function () {
+                    var rows = $('#tb_scheduling').datagrid('getRows');
+                    var queryParam = schedulueFunc.getParam();
+                    var result = rows.map(function (item) {
+
+                        var days = Object.keys(item).filter(function (key) {
+                            return item[key] == 1;
+                        }).map(function (key) {
+                            var result = key;
+                            if (key.length == 1) {
+                                result = "0" + key;
+                            }
+                            return result;
+                        }).join(',');
+                        return item.UserId + "-" + days;
+                    }).join("|");
+                    $.messager.progress();
+                    queryParam["data"] = result;
+                    $.post("/CService/CallCenter/SaveDays", queryParam, function (data) {
+                        var jsonData = JSON.parse(data);
+                        $.procAjaxData(jsonData, function (jsonData) {
+                            $.messager.progress('close');
+                        }, function () {
+                            $.messager.progress('close');
+                        })
+                    })
+                },
+                queryData: function (month) {
+                    $.getJSON("/CService/CallCenter/GetSchedulingData", schedulueFunc.getParam(month), function (jsonData) {
+                        var data = jsonData.rows;
+                        var holidays = jsonData.holiday;
+
+                        if (holidays) {
+                            scheduleBox.holidays = holidays.Holidays;
+                            scheduleBox.weekDays = holidays.WeekDays;
+                        }
+                        if (data && data.length > 0) {
+                            var obj = {};
+                            var holidays = "", weekDays = "";
+                            var result = data.map(function (item) {
+                                obj = {
+                                    UserId: item.UserId,
+                                    UserName: item.UserName,
+                                    Phone: item.MobilePhone
+                                }
+                                if (item.Days && item.Days.length > 0) {
+                                    var strDays = item.Days.split(',');
+                                    strDays.forEach(function (day) {
+                                        var field = "" + parseInt(day);
+                                        obj[field] = 1;
+                                    });
+                                }
+
+                                return obj;
+                            })
+
+                            schedulueFunc.initTable(result);
+                        }
+                    })
+                }
+            }
+
+            schedulueFunc.InitTalbeToolBar();
+            schedulueFunc.initLayout();
+            schedulueFunc.queryData();
+
+        });
+    </script>
 </body>
 </html>
