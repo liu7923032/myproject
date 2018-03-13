@@ -4,9 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
-    <link href="/js/EasyUI/themes/icon.css" rel="stylesheet" />
-    <link href="/CSS/MyCSS/MyTable.css" rel="stylesheet" />
-    <link href="/js/EasyUI/themes/default/easyui.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../../lib/easyui/themes/icon.css">
+    <link rel="stylesheet" href="../../lib/easyui/themes/color.css">
+    <link rel="stylesheet" href="../../lib/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" href="../../public/css/easyui-extend.css">
+    <link rel="stylesheet" href="../../public/css/main.css">
 </head>
 <body>
 
@@ -43,11 +45,9 @@
         <div data-options="iconCls:'icon-redo'" onclick="schedulueFunc.cancel()">取消</div>
     </div>
 
-    <script src="/js/EasyUI/jquery.js"></script>
-    <script src="/js/EasyUI/jquery.easyui.js"></script>
-    <script src="/js/MyJS/Jquery.MyJS.js"></script>
-    <script src="/js/MyJS/Date.js"></script>
-    <script src="/js/EasyUI/locale/easyui-lang-zh_CN.js"></script>
+    <script src="../../lib/easyui/jquery.min.js"></script>
+    <script src="../../lib/easyui/jquery.easyui.min.js"></script>
+    <script src="../../public/js/main.js"></script>
     <script type="text/javascript">
 
         var scheduleBox = {
@@ -141,35 +141,6 @@
                         //}]
                     })
                 },
-                //根据权限加载按钮
-                InitTalbeToolBar: function () {
-
-                    $.getJSON('/MenuBtn/GetBtnByMenuNo/HJZX0006', "", function (data) {
-                        if (data && data.length > 0) {
-                            data.push({
-                                text: '<span style="color:blue;">【左键单选】</span>'
-                            }, {
-                                text: '<span style="color:red;">【右键范围选择】</span>'
-                            }, {
-                                text: '<span style="color:red;">【红色为双休,绿色为国假】</span>'
-                            });
-                            $('#tb_scheduling').datagrid({ toolbar: data });
-                        } else {
-
-                            $('#tb_scheduling').datagrid({
-                                toolbar: [{
-                                    text: '<span style="color:blue;">【左键单选】</span>'
-                                }, '-', {
-                                    text: '<span style="color:red;">【右键范围选择】</span>'
-                                }, '-', {
-                                    text: '<span style="color:red;">【红色为双休,绿色为国假】</span>'
-                                }]
-                            });
-                        }
-
-
-                    });
-                },
                 getParam: function (month) {
                     return {
                         "yFlag": $('#txtYear').combobox('getValue'),
@@ -195,8 +166,7 @@
                     var oneRow = [
                         { field: 'SerialNo', hidden: true, width: 20, align: 'left', rowspan: 2 },
                         { field: 'UserId', hidden: true, width: 20, align: 'left', rowspan: 2 },
-                        { field: 'UserName', width: 70, title: "60", align: 'center', rowspan: 2 },
-                        { field: 'Phone', width: 80, title: "座机", align: 'center', rowspan: 2 },
+                        { field: 'UserName', width: 70, title: "姓名", align: 'center', rowspan: 2 },
                         { field: 'Months', width: 300, align: 'center', title: '<span style="color:blue;font-size:18px;font-weight:1000;margin:5px;">' + title + '</span>', colspan: dayData }
                     ];
                     var twoRow = [];
@@ -340,9 +310,10 @@
                 }
             }
 
-            schedulueFunc.InitTalbeToolBar();
             schedulueFunc.initLayout();
-            schedulueFunc.queryData();
+            // schedulueFunc.queryData();
+
+             schedulueFunc.initTable([]);
 
         });
     </script>

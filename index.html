@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>项目管理系统</title>
+    <title>物业派单管理系统</title>
     <link rel="stylesheet" href="./lib/easyui/themes/icon.css">
     <link rel="stylesheet" href="./lib/easyui/themes/color.css">
     <link rel="stylesheet" href="./lib/easyui/themes/default/easyui.css">
@@ -19,7 +19,7 @@
         <div class="" data-options="region:'north',height:52">
             <div class="header">
                 <div class="logo">
-                    项目管理系统
+                        物业派单管理系统
                 </div>
                 <div class="left">
 
@@ -43,7 +43,8 @@
         <div data-options="region:'south',height:25">
             <div class="p-bottom">
                 <div>
-                    当前人员:<span>18</span>
+                    当前人员:
+                    <span>18</span>
                 </div>
             </div>
         </div>
@@ -54,58 +55,80 @@
     <script src="./public/js/main.js"></script>
     <script>    
         $(function () {
-            var menus = [{
+            // var menus = [{
+            //     name: '设置',
+            //     url: '',
+            //     children: [{
+            //         name: '基本字典', url: 'views/base/basicDict.html'
+            //     }, {
+            //         name: '客户信息', url: 'views/base/hospital.html'
+            //     }, {
+            //         name: '部门信息', url: 'views/organization/depart.html'
+            //     }, , {
+            //         name: '人员信息', url: 'views/base/users.html'
+            //     }]
+            // }, {
+            //     name: '权限',
+            //     url: '',
+            //     children: [{
+            //         name: '菜单管理', url: 'views/permission/menu.html'
+            //     },{
+            //         name: '角色授权', url: 'views/permission/rolesetting.html'
+            //     }, {
+            //         name: '权限设置', url: 'views/permission/psetting.html'
+            //     },]
+            // }, {
+            //     name: '管理',
+            //     url: '',
+            //     children: [{
+            //         name: '派单管理', url: 'views/transportantion/order.html'
+            //     }, {
+            //         name: '排班管理', url: 'views/transportantion/schedule.html'
+            //     }]
+            //     // children: [{
+            //     //     name: '项目维护', url: 'views/manage/maintenance.html'
+            //     // }, {
+            //     //     name: '文档审核', url: 'views/manage/fileapprove.html'
+            //     // }, {
+            //     //     name: '阶段设置', url: 'views/manage/stageset.html'
+            //     // },]
+            // }, {
+            //     name: '报表',
+            //     url: '',
+            //     children: [{
+            //         name: '工单统计', url: 'views/report/weekreport.html'
+            //     }, {
+            //         name: '人员完成统计', url: 'views/report/custom.html'
+            //     }, {
+            //         // name: '年度完成统计', url: 'views/report/yearcountreport.html'
+            //     },]
+            // }]
+
+               var menus = [{
                 name: '设置',
                 url: '',
                 children: [{
                     name: '基本字典', url: 'views/base/basicDict.html'
-                }, {
-                    name: '客户信息', url: 'views/base/hospital.html'
-                }, {
-                    name: '部门信息', url: 'views/organization/depart.html'
-                },, {
+                }, , {
                     name: '人员信息', url: 'views/base/users.html'
                 }]
-            }, {
-                name: '权限',
-                url: '',
-                children: [{
-                    name: '菜单管理', url: 'views/permission/menu.html'
-                }, {
-                    name: '角色授权', url: 'views/permission/rolesetting.html'
-                }, {
-                    name: '权限设置', url: 'views/permission/psetting.html'
-                },]
-            }, {
-                name: '项目',
-                url: '',
-                children: [{
-                    name: '项目立项', url: 'views/project/build.html'
-                }, {
-                    name: '项目履约', url: 'views/project/performance.html'
-                }, {
-                    name: '信息查询', url: 'views/project/queryproject.html'
-                },]
             }, {
                 name: '管理',
                 url: '',
                 children: [{
-                    name: '项目维护', url: 'views/manage/maintenance.html'
+                    name: '派单管理', url: 'views/transportantion/order.html'
                 }, {
-                    name: '文档审核', url: 'views/manage/fileapprove.html'
-                }, {
-                    name: '阶段设置', url: 'views/manage/stageset.html'
-                },]
+                    name: '排班管理', url: 'views/transportantion/schedule.html'
+                }]
+               
             }, {
                 name: '报表',
                 url: '',
                 children: [{
-                    name: '履约周报', url: 'views/report/weekreport.html'
+                    name: '工单统计', url: 'views/report/orderCount.html'
                 }, {
-                    name: '客户分布', url: 'views/report/custom.html'
-                }, {
-                    name: '年度完成统计', url: 'views/report/yearcountreport.html'
-                },]
+                    name: '人员完成统计', url: 'views/report/custom.html'
+                }]
             }]
             var methods = {
                 init: function () {

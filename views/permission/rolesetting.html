@@ -15,7 +15,7 @@
 
 <body>
     <div class="easyui-layout" data-options="fit:true,border:false">
-        <div data-options="region:'west',width:200,title:'角色',tools:[{iconCls:'icon-add',handler:function(){$('#dlg_dictType').dialog('open')}}]">
+        <div data-options="region:'west',width:200,title:'角色',tools:[{iconCls:'icon-add',handler:function(){$('#dlg_role').dialog('open')}}]">
             <ul class="easyui-tree" id="tree_role">
             </ul>
         </div>
@@ -29,6 +29,31 @@
         </div>
     </div>
 
+    <!-- 字典类别 -->
+    <div id="dlg_role">
+        <form id="frm_role">
+            <table class="form-table">
+                <tr>
+                    <td class="tdLabel">角色名称</td>
+                    <td>
+                        <input class="easyui-textbox" name="name" data-options="width:300,required:true" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdLabel">角色序号</td>
+                    <td>
+                        <input class="easyui-textbox" name="sort" data-options="width:300" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdLabel">字典备注</td>
+                    <td>
+                        <input class="easyui-textbox" name="memo" data-options="width:300,multiline:true,height:100" />
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
 
     <script src="../../lib/easyui/jquery.min.js"></script>
     <script src="../../lib/easyui/jquery.easyui.min.js"></script>
@@ -41,7 +66,24 @@
 
             var methods = {
                 init: function () {
-
+                    $('#dlg_role').dialog({
+                        closed: true,
+                        buttons: [
+                            {
+                                text: '保存',
+                                iconCls: 'icon-save',
+                                handler: function () {
+                                    methods.saveRole()
+                                }
+                            }, {
+                                text: '关闭',
+                                iconCls: 'icon-save',
+                                handler: function () {
+                                    $('#dlg_role').dialog('close')
+                                }
+                            }
+                        ]
+                    });
                 },
                 initTree: function () {
                     $('#tree_role').tree({
@@ -111,7 +153,17 @@
                         ]
                     });
                 },
-
+                saveRole: function () {
+                    $.formSave({
+                        success: function (data) {
+                            //刷新树
+                            $('#tree_role').tree('reload')
+                            //关闭dialog
+                            $('#dlg_role').dialog('close')
+                           
+                        }
+                    })
+                },
                 saveUseToRole: function () {
                     if (!selectNode) {
                         $.errorMsg("请选择角色");
@@ -125,7 +177,7 @@
                     }
 
                     var strJson = JSON.stringify(checkRows);
-                
+
                     $.post(delUrl, { "users": strJson, "roleId": selectNode.id }, function (data) {
                         $.procAjax(data, function (data) {
                             $('#tb_uRole').datagrid('reload');

@@ -57,13 +57,13 @@ $.extend({
             pageSize: 15,
             pageNumber: 1,
             pageList: [15, 30, 45],
-            onBeforeLoad:function(param){
+            onBeforeLoad: function (param) {
                 console.log(param)
             },
-            queryParams:{},
-            loader:function(param,success,error){
-                console.log(param)
-            }
+            queryParams: {},
+            // loader:function(param,success,error){
+            //     console.log(param)
+            // }
         }
         $.extend(dataGirdOptions, options);
         console.log(dataGirdOptions)
@@ -162,6 +162,12 @@ $.extend({
             options.save(editIndex, editIndexArray);
         }
     },
+    createS4: function () {
+        return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1).toUpperCase();
+    },
+    newGuid: function () {
+        return ($.createS4() + $.createS4() + "-" + $.createS4() + "-" + $.createS4() + "-" + $.createS4() + "-" + $.createS4() + $.createS4() + $.createS4());
+    },
     dialogAndDg: function (options) {
 
         var newId = $.newGuid(),
@@ -219,7 +225,7 @@ $.extend({
                     '<td><div class="datagrid-btn-separator" style="margin:0px 5px;"></div></td>';
             }).join('');
         }
-        strBtns += "<td><label style='margin-left:2px;color:red;'>[双击选择项目]</label></td></tr></table></div>";
+        strBtns += "<td><label style='margin-left:2px;color:red;'>[双击选择选项]</label></td></tr></table></div>";
         //初始化工具栏
         if (strBtns.length > 0) {
             $(document.body).append(strBtns);
@@ -268,13 +274,11 @@ $.extend({
         var datagridOpt = opts.tbOpts;
         datagridOpt["toolbar"] = "#" + divTools;
         datagridOpt["id"] = "" + tbId;
-        $.initDatagrid(datagridOpt);
+        $.dgInit(datagridOpt);
         //开启dialog
         $('#' + dlgId).dialog('open');
     },
-    dialogAndTree: function (opitons) {
 
-    },
     //行选择检查
     rowSelectCheck: function (id, message, func) {
         var row = $('#' + id).datagrid('getSelected');
@@ -320,6 +324,32 @@ $.extend({
                 }
             }
         })
-    }
+    },
+    getYearArray: function () {
+        var currentYear = parseInt(new Date().getFullYear());
+        var yearArray = [];
+        for (var i = currentYear + 3; i >= 2004; i--) {
+            var obj = new Object();
+            obj.id = i;
+            obj.text = i.toString() + '年';
+            yearArray.push(obj);
+        }
+        return yearArray;
+    },
+
+    getMonthArray: function () {
+        var array = [];
+        for (var i = 1; i <= 12; i++) {
+            array.push({
+                id: i,
+                text: (i + "月")
+            });
+        }
+        return array;
+    },
+    dayNumOfMonth: function (year, month) {
+        var d = new Date(year, month, 0);
+        return d.getDate();
+    },
 
 })
